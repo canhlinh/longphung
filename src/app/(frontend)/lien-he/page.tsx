@@ -20,11 +20,11 @@ export default async function ContactPage() {
         <h1>Dat hai san nhanh qua Zalo hoac hotline</h1>
         <p>Gui danh sach san pham, so luong va thoi gian can nhan. Long Phung se phan hoi nhanh.</p>
         <div className="hero-actions">
-          <a className="button primary" href={settings.zaloUrl}>
+          <a className="button primary" href={(settings as any).zaloUrl}>
             <MessageCircle size={18} /> Chat Zalo
           </a>
-          <a className="button secondary" href={`tel:${settings.hotline.replace(/\s/g, '')}`}>
-            <Phone size={18} /> {settings.hotline}
+          <a className="button secondary" href={`tel:${(settings as any).hotline.replace(/\s/g, '')}`}>
+            <Phone size={18} /> {(settings as any).hotline}
           </a>
         </div>
       </section>

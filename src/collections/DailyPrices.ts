@@ -11,6 +11,8 @@ export const DailyPrices: CollectionConfig = {
   access: {
     create: admins,
     delete: admins,
+    // Note: uses isActive flag instead of publishedOrAdmin/_status because this collection
+    // intentionally has no versions/drafts (prices are time-bound records). (addresses Issue 24)
     read: ({ req: { user } }) => {
       if (user) {
         return true

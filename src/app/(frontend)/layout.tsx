@@ -4,7 +4,9 @@ import { Footer, Header } from './components'
 import './styles.css'
 import { fallbackCategories, getSettings, findDocs } from '@/lib/storefront'
 
-export const dynamic = 'force-dynamic'
+// Removed force-dynamic to allow caching/revalidation. Use revalidate for periodic refresh.
+// For production, consider Payload hooks + revalidatePath or unstable_cache with tags.
+export const revalidate = 60
 
 export const metadata = {
   description: 'Hai san tuoi song, sashimi, combo gia dinh va bang gia moi ngay.',

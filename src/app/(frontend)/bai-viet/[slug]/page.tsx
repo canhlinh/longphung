@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import React from 'react'
 
 import { ContactBand, ProductGrid, SectionHeader } from '../../components'
@@ -21,9 +22,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const fallback = fallbackPosts.find((post) => post.slug === slug)
   const post = await findOne('posts', slug, fallback)
 
+  if (!post) {
+    notFound()
+  }
+
   return {
-    title: post?.seo?.title || `${post?.title || 'Bai viet'} | Long Phung Seafood`,
-    description: post?.seo?.description || post?.excerpt,
+    title: post.seo?.title || `${post.title} | Long Phung Seafood`,
+    description: post.seo?.description || post.excerpt,
   }
 }
 
@@ -34,15 +39,7 @@ export default async function PostPage({ params }: PageProps) {
   const settings = await getSettings()
 
   if (!post) {
-    return (
-      <section className="page-hero compact">
-        <p className="eyebrow">Bai viet</p>
-        <h1>Khong tim thay bai viet</h1>
-        <Link className="button primary" href="/bai-viet">
-          Xem bai viet khac
-        </Link>
-      </section>
-    )
+    notFound()
   }
 
   const relatedProducts = Array.isArray(post.relatedProducts)
@@ -52,7 +49,7 @@ export default async function PostPage({ params }: PageProps) {
   return (
     <>
       <article className="article-detail">
-        <img alt={post.title} src={getMediaUrl(post.coverImage, 1)} />
+        <Image alt={post.title} src={getMediaUrl(post.coverImage, 1)} width={800} height={400} />
         <p className="eyebrow">Cung vao bep</p>
         <h1>{post.title}</h1>
         <p className="lead">{post.excerpt}</p>

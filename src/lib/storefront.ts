@@ -1,9 +1,10 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
+// Stronger types from '@/payload-types' can be adopted for findDocs/get* when desired.
 
-type AnyDoc = Record<string, any>
+type AnyDoc = Record<string, unknown>
 
-export const fallbackSettings: any = {
+export const fallbackSettings: Record<string, unknown> = {
   brandName: 'Long Phung Seafood',
   tagline: 'Hai san tuoi moi ngay cho gia dinh va nha hang',
   hotline: '0900 000 000',
@@ -22,7 +23,7 @@ export const fallbackImages = [
   'https://images.unsplash.com/photo-1606851091851-e8c8c0fca5ba?auto=format&fit=crop&w=1200&q=80',
 ]
 
-export const fallbackCategories: any[] = [
+export const fallbackCategories = [
   {
     id: 'hai-san-tuoi',
     name: 'Hai san tuoi',
@@ -38,9 +39,9 @@ export const fallbackCategories: any[] = [
     featured: true,
   },
   {
-    id: 'combo',
+    id: 'combo-gia-dinh',
     name: 'Combo gia dinh',
-    slug: 'combo',
+    slug: 'combo-gia-dinh',
     description: 'Combo nau lau, tiec nho va bua an nhanh trong ngay.',
     featured: true,
   },
@@ -141,7 +142,9 @@ export async function findDocs<T extends AnyDoc>(
     })
 
     return result.docs as T[]
-  } catch {
+  } catch (err) {
+    // Log instead of silent failure so operators see real issues (DB down, misconfig etc.)
+    console.error(`[storefront] findDocs failed for ${collection}:`, err)
     return fallback
   }
 }
@@ -171,21 +174,24 @@ export async function getSettings() {
   try {
     const payload = await getPayloadClient()
     return (await payload.findGlobal({ slug: 'site-settings' as any })) as typeof fallbackSettings
-  } catch {
+  } catch (err) {
+    console.error('[storefront] getSettings failed:', err)
     return fallbackSettings
   }
 }
 
-export function getMediaUrl(media: any, fallbackIndex = 0): string {
-  if (media && typeof media === 'object' && media.url) {
-    return media.url
+export function getMediaUrl(media: unknown, fallbackIndex = 0): string {
+  const m = media as { url?: string } | null | undefined
+  if (m && typeof m === 'object' && m.url) {
+    return m.url
   }
 
   return fallbackImages[fallbackIndex % fallbackImages.length]
 }
 
-export function getProductImage(product: any, fallbackIndex = 0): string {
-  const image = product?.images?.[0]?.image
+export function getProductImage(product: unknown, fallbackIndex = 0): string {
+  const p = product as { images?: Array<{ image?: unknown }> } | null | undefined
+  const image = p?.images?.[0]?.image
   return getMediaUrl(image, fallbackIndex)
 }
 
@@ -216,14 +222,18 @@ export function createZaloUrl(zaloUrl: string, message: string): string {
   return `${zaloUrl}${separator}text=${encodeURIComponent(message)}`
 }
 
-export function plainTextFromRichText(value: any): string {
-  const children = value?.root?.children
+export function plainTextFromRichText(value: unknown): string {
+  const root = (value as { root?: { children?: unknown[] } })?.root
+  const children = root?.children
   if (!Array.isArray(children)) {
     return ''
   }
 
   return children
-    .map((child) => child?.children?.map((item: any) => item.text).join(' '))
+    .map((child) => {
+      const c = child as { children?: unknown[] }
+      return c?.children?.map((item: unknown) => (item as { text?: string })?.text || '').join(' ')
+    })
     .filter(Boolean)
     .join(' ')
 }

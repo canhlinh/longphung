@@ -9,6 +9,7 @@ import {
   Snowflake,
   Truck,
 } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -20,6 +21,7 @@ import {
   stockLabel,
 } from '@/lib/storefront'
 
+// Using any for props to accommodate mixed DB docs + fallback shapes (full payload-types adoption recommended in future)
 type PropsWithSettings = {
   settings: any
 }
@@ -97,7 +99,14 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
 
   return (
     <section className="hero">
-      <img alt={banner?.title || 'Hai san Long Phung'} className="hero-image" src={imageUrl} />
+      <Image
+        alt={banner?.title || 'Hai san Long Phung'}
+        className="hero-image"
+        src={imageUrl}
+        width={1200}
+        height={630}
+        priority
+      />
       <div className="hero-content">
         <p className="eyebrow">Tuoi moi ngay · Gia ro rang · Giao nhanh</p>
         <h1>{banner?.title || 'Hai san tuoi cho bua an gia dinh va bep nha hang'}</h1>
@@ -169,7 +178,7 @@ export function CategoryGrid({ categories }: { categories: any[] }) {
     <div className="category-grid">
       {categories.map((category, index) => (
         <Link className="category-card" href={`/danh-muc/${category.slug}`} key={category.id}>
-          <img alt={category.name} src={getMediaUrl(category.image, index)} />
+          <Image alt={String(category.name)} src={getMediaUrl(category.image, index)} width={400} height={300} />
           <span>{category.name}</span>
           <p>{category.description}</p>
         </Link>
@@ -198,7 +207,7 @@ export function ProductCard({
   return (
     <article className="product-card">
       <Link className="product-image" href={`/san-pham/${product.slug}`}>
-        <img alt={product.name} src={getProductImage(product, index)} />
+        <Image alt={String(product.name)} src={getProductImage(product, index)} width={400} height={300} />
         <span>{stockLabel(product.stockStatus)}</span>
       </Link>
       <div className="product-body">
@@ -263,7 +272,7 @@ export function PostGrid({ posts }: { posts: any[] }) {
     <div className="post-grid">
       {posts.map((post, index) => (
         <Link className="post-card" href={`/bai-viet/${post.slug}`} key={post.id}>
-          <img alt={post.title} src={getMediaUrl(post.coverImage, index + 1)} />
+          <Image alt={String(post.title)} src={getMediaUrl(post.coverImage, index + 1)} width={400} height={240} />
           <span>Vao bep</span>
           <h3>{post.title}</h3>
           <p>{post.excerpt}</p>

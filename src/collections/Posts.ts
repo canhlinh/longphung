@@ -21,6 +21,7 @@ export const Posts: CollectionConfig = {
   hooks: {
     beforeValidate: [
       ({ data }) => {
+        // Slug generated only if absent. Title changes do not auto-regenerate to protect URLs.
         if (data?.title && !data.slug) {
           data.slug = slugify(data.title)
         }

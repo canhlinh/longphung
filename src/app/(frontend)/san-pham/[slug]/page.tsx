@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { MessageCircle, Phone } from 'lucide-react'
+import Image from 'next/image'
 import React from 'react'
 
 import { ContactBand, ProductGrid, SectionHeader } from '../../components'
@@ -24,10 +25,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const fallback = fallbackProducts.find((product) => product.slug === slug)
   const product = await findOne('products', slug, fallback)
-  const description = product?.seo?.description || product?.shortDescription
+
+  if (!product) {
+    notFound()
+  }
+
+  const description = product.seo?.description || product.shortDescription
 
   return {
-    title: product?.seo?.title || `${product?.name || 'San pham'} | Long Phung Seafood`,
+    title: product.seo?.title || `${product.name} | Long Phung Seafood`,
     description,
   }
 }
@@ -39,17 +45,10 @@ export default async function ProductPage({ params }: PageProps) {
   const settings = await getSettings()
 
   if (!product) {
-    return (
-      <section className="page-hero compact">
-        <p className="eyebrow">San pham</p>
-        <h1>Khong tim thay san pham</h1>
-        <Link className="button primary" href="/bang-gia">
-          Xem bang gia
-        </Link>
-      </section>
-    )
+    notFound()
   }
 
+  // Parallel fetch for related (independent of product beyond the exclude filter)
   const related = await findDocs(
     'products',
     {
@@ -72,7 +71,7 @@ export default async function ProductPage({ params }: PageProps) {
     <>
       <section className="product-detail">
         <div className="detail-media">
-          <img alt={product.name} src={getProductImage(product, 0)} />
+          <Image alt={product.name} src={getProductImage(product, 0)} width={600} height={400} />
         </div>
         <div className="detail-content">
           <p className="eyebrow">{stockLabel(product.stockStatus)}</p>
@@ -103,10 +102,10 @@ export default async function ProductPage({ params }: PageProps) {
             ) : null}
           </dl>
           <div className="hero-actions">
-            <a className="button primary" href={createZaloUrl(settings.zaloUrl, message)}>
+            <a className="button primary" href={createZaloUrl((settings as any).zaloUrl, message)}>
               <MessageCircle size={18} /> Dat qua Zalo
             </a>
-            <a className="button secondary" href={`tel:${settings.hotline.replace(/\s/g, '')}`}>
+            <a className="button secondary" href={`tel:${(settings as any).hotline.replace(/\s/g, '')}`}>
               <Phone size={18} /> Goi ngay
             </a>
           </div>

@@ -18,6 +18,7 @@ export const Categories: CollectionConfig = {
   hooks: {
     beforeValidate: [
       ({ data }) => {
+        // Slug generated only if absent. Name changes do not auto-regenerate to protect URLs.
         if (data?.name && !data.slug) {
           data.slug = slugify(data.name)
         }

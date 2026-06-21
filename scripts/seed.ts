@@ -4,6 +4,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 
 import { slugify } from '@/lib/slugify'
+import { PLACEMENTS } from '@/lib/constants'
 
 const adminEmail = process.env.ADMIN_EMAIL || 'admin@longphung.local'
 const adminPassword = process.env.ADMIN_PASSWORD || 'LongPhung123!'
@@ -197,20 +198,36 @@ async function seed() {
     }
   }
 
-  await payload.create({
+  // Use upsert for banners too to make seed idempotent (prevent duplicates on re-run)
+  const bannerExisting = await payload.find({
     collection: 'banners',
-    data: {
-      _status: 'published',
-      isActive: true,
-      linkLabel: 'Xem bang gia',
-      linkUrl: '/bang-gia',
-      placement: 'home',
-      sortOrder: 10,
-      subtitle:
-        'Long Phung cap nhat san pham va bang gia moi ngay, uu tien dat nhanh qua Zalo hoac hotline.',
-      title: 'Hai san tuoi cho bua an gia dinh va bep nha hang',
+    limit: 1,
+    where: {
+      placement: {
+        equals: 'home',
+      },
     },
   })
+  const bannerData = {
+    _status: 'published' as const,
+    isActive: true,
+    linkLabel: 'Xem bang gia',
+    linkUrl: '/bang-gia',
+    placement: PLACEMENTS.HOME,
+    sortOrder: 10,
+    subtitle:
+      'Long Phung cap nhat san pham va bang gia moi ngay, uu tien dat nhanh qua Zalo hoac hotline.',
+    title: 'Hai san tuoi cho bua an gia dinh va bep nha hang',
+  }
+  if (bannerExisting.docs[0]) {
+    await payload.update({
+      collection: 'banners',
+      id: bannerExisting.docs[0].id,
+      data: bannerData,
+    })
+  } else {
+    await payload.create({ collection: 'banners', data: bannerData })
+  }
 
   const posts = [
     {

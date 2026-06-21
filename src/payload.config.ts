@@ -36,6 +36,15 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
+  // Basic startup validation to catch missing required envs early (Issue 21)
+  onInit: async (payload) => {
+    if (!process.env.PAYLOAD_SECRET) {
+      payload.logger.warn('PAYLOAD_SECRET is not set - using empty secret (insecure for production)')
+    }
+    if (!process.env.DATABASE_URL) {
+      payload.logger.warn('DATABASE_URL is not set - falling back may cause connection failures')
+    }
+  },
   sharp,
   plugins: [],
 })

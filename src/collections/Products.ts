@@ -20,7 +20,10 @@ export const Products: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [
-      ({ data }) => {
+      ({ data, operation: _operation }) => {
+        // Generate slug only when absent (on create or explicit clear).
+        // Changing name does NOT auto-update slug to avoid breaking published permalinks.
+        // See Issue 15 - admins can manually edit slug if needed.
         if (data?.name && !data.slug) {
           data.slug = slugify(data.name)
         }

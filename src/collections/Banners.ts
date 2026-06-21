@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { admins, publishedOrAdmin } from '@/access/admins'
+import { PLACEMENT_LABELS, PLACEMENTS } from '@/lib/constants'
 
 export const Banners: CollectionConfig = {
   slug: 'banners',
@@ -43,8 +44,8 @@ export const Banners: CollectionConfig = {
     {
       name: 'placement',
       type: 'select',
-      defaultValue: 'home',
-      options: [{ label: 'Trang chu', value: 'home' }],
+      defaultValue: PLACEMENTS.HOME,
+      options: [{ label: PLACEMENT_LABELS[PLACEMENTS.HOME], value: PLACEMENTS.HOME }],
       required: true,
     },
     {

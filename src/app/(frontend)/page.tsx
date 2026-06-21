@@ -18,6 +18,7 @@ import {
   findDocs,
   getSettings,
 } from '@/lib/storefront'
+import { PLACEMENTS } from '@/lib/constants'
 
 export default async function HomePage() {
   const [settings, banners, categories, products, prices, posts] = await Promise.all([
@@ -31,7 +32,7 @@ export default async function HomePage() {
             equals: true,
           },
           placement: {
-            equals: 'home',
+            equals: PLACEMENTS.HOME,
           },
         },
       },
