@@ -74,6 +74,7 @@ export interface Config {
     'daily-prices': DailyPrice;
     banners: Banner;
     posts: Post;
+    'wholesale-customers': WholesaleCustomer;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     'daily-prices': DailyPricesSelect<false> | DailyPricesSelect<true>;
     banners: BannersSelect<false> | BannersSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'wholesale-customers': WholesaleCustomersSelect<false> | WholesaleCustomersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -204,6 +206,18 @@ export interface Category {
   name: string;
   slug: string;
   description?: string | null;
+  /**
+   * Emoji hiển thị trên bảng giá sỉ.
+   */
+  icon?: string | null;
+  /**
+   * Mã màu hex cho placeholder ảnh.
+   */
+  color?: string | null;
+  /**
+   * ID nhóm từ hệ thống import.
+   */
+  sourceGroupId?: number | null;
   image?: (number | null) | Media;
   featured?: boolean | null;
   sortOrder?: number | null;
@@ -238,6 +252,16 @@ export interface Product {
   featured?: boolean | null;
   bestSeller?: boolean | null;
   shortDescription: string;
+  /**
+   * URL ảnh import từ bảng giá bên ngoài.
+   */
+  sourceImageUrl?: string | null;
+  /**
+   * ID sản phẩm từ hệ thống import.
+   */
+  externalKey?: string | null;
+  isNewListing?: boolean | null;
+  priceDirection?: ('none' | 'up' | 'down') | null;
   description?: {
     root: {
       type: string;
@@ -273,6 +297,23 @@ export interface DailyPrice {
   product?: (number | null) | Product;
   displayName: string;
   unit: 'kg' | 'con' | 'thung' | 'hop' | 'set';
+  /**
+   * Nhãn đơn vị đầy đủ trên bảng giá sỉ.
+   */
+  displayUnit?: string | null;
+  /**
+   * Danh sách bậc giá sỉ/lẻ theo quy cách.
+   */
+  priceTiers?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  externalKey?: string | null;
   price: number;
   wholesalePrice?: number | null;
   note?: string | null;
@@ -335,6 +376,40 @@ export interface Post {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Mỗi khách sỉ có một link riêng dạng /bg/ten-khach-xxxxxx để xem giá sỉ và đặt hàng.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "wholesale-customers".
+ */
+export interface WholesaleCustomer {
+  id: number;
+  name: string;
+  /**
+   * Tự tạo khi lưu. Ví dụ: tran-long-7bc3ps
+   */
+  slug: string;
+  /**
+   * Gửi link này cho khách sỉ.
+   */
+  orderLink?: string | null;
+  contactPerson?: string | null;
+  phone?: string | null;
+  /**
+   * Hiển thị trên trang bảng giá sỉ của khách.
+   */
+  greeting?: string | null;
+  tierName?: string | null;
+  storeDisplayName?: string | null;
+  saleName?: string | null;
+  salePhone?: string | null;
+  bossName?: string | null;
+  bossPhone?: string | null;
+  promoText?: string | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -385,6 +460,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'wholesale-customers';
+        value: number | WholesaleCustomer;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -502,6 +581,9 @@ export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
+  icon?: T;
+  color?: T;
+  sourceGroupId?: T;
   image?: T;
   featured?: T;
   sortOrder?: T;
@@ -532,6 +614,10 @@ export interface ProductsSelect<T extends boolean = true> {
   featured?: T;
   bestSeller?: T;
   shortDescription?: T;
+  sourceImageUrl?: T;
+  externalKey?: T;
+  isNewListing?: T;
+  priceDirection?: T;
   description?: T;
   preservationNotes?: T;
   cookingNotes?: T;
@@ -554,6 +640,9 @@ export interface DailyPricesSelect<T extends boolean = true> {
   product?: T;
   displayName?: T;
   unit?: T;
+  displayUnit?: T;
+  priceTiers?: T;
+  externalKey?: T;
   price?: T;
   wholesalePrice?: T;
   note?: T;
@@ -600,6 +689,28 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "wholesale-customers_select".
+ */
+export interface WholesaleCustomersSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  orderLink?: T;
+  contactPerson?: T;
+  phone?: T;
+  greeting?: T;
+  tierName?: T;
+  storeDisplayName?: T;
+  saleName?: T;
+  salePhone?: T;
+  bossName?: T;
+  bossPhone?: T;
+  promoText?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

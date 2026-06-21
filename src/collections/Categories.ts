@@ -49,6 +49,30 @@ export const Categories: CollectionConfig = {
       label: 'Mô tả',
     },
     {
+      name: 'icon',
+      type: 'text',
+      label: 'Icon nhóm',
+      admin: {
+        description: 'Emoji hiển thị trên bảng giá sỉ.',
+      },
+    },
+    {
+      name: 'color',
+      type: 'text',
+      label: 'Màu nhóm',
+      admin: {
+        description: 'Mã màu hex cho placeholder ảnh.',
+      },
+    },
+    {
+      name: 'sourceGroupId',
+      type: 'number',
+      label: 'ID nhóm nguồn',
+      admin: {
+        description: 'ID nhóm từ hệ thống import.',
+      },
+    },
+    {
       name: 'image',
       type: 'upload',
       label: 'Hình ảnh',

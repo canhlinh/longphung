@@ -7,7 +7,7 @@ import { STOCK_LABELS, STOCK_STATUS } from '@/lib/labels'
 type AnyDoc = Record<string, unknown>
 
 export const fallbackSettings: Record<string, unknown> = {
-  brandName: 'Long Phụng Seafood',
+  brandName: 'Hải Sản Long Phụng',
   tagline: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
   hotline: '0900 000 000',
   zaloUrl: 'https://zalo.me/0900000000',
@@ -151,6 +151,39 @@ export async function findDocs<T extends AnyDoc>(
   }
 }
 
+export async function findAllDocs<T extends AnyDoc>(
+  collection: string,
+  options: Record<string, any> = {},
+  fallback: T[] = [],
+  pageSize = 200,
+): Promise<T[]> {
+  try {
+    const payload = await getPayloadClient()
+    const docs: T[] = []
+    let page = 1
+    let hasNextPage = true
+
+    while (hasNextPage) {
+      const result = await payload.find({
+        collection: collection as any,
+        depth: 2,
+        limit: pageSize,
+        page,
+        ...options,
+      })
+
+      docs.push(...(result.docs as T[]))
+      hasNextPage = result.hasNextPage
+      page += 1
+    }
+
+    return docs
+  } catch (err) {
+    console.error(`[storefront] findAllDocs failed for ${collection}:`, err)
+    return fallback
+  }
+}
+
 export async function findOne<T extends AnyDoc>(
   collection: string,
   slug: string,
@@ -197,21 +230,7 @@ export function getProductImage(product: unknown, fallbackIndex = 0): string {
   return getMediaUrl(image, fallbackIndex)
 }
 
-export function formatPrice(value?: number | null, label?: string | null): string {
-  if (label) {
-    return label
-  }
-
-  if (!value) {
-    return 'Liên hệ'
-  }
-
-  return new Intl.NumberFormat('vi-VN', {
-    currency: 'VND',
-    maximumFractionDigits: 0,
-    style: 'currency',
-  }).format(value)
-}
+export { createZaloUrl, formatPrice } from '@/lib/client-pricing'
 
 export function stockLabel(status?: string): string {
   if (status === STOCK_STATUS.PREORDER) return STOCK_LABELS[STOCK_STATUS.PREORDER]
@@ -219,9 +238,19 @@ export function stockLabel(status?: string): string {
   return STOCK_LABELS[STOCK_STATUS.IN_STOCK]
 }
 
-export function createZaloUrl(zaloUrl: string, message: string): string {
-  const separator = zaloUrl.includes('?') ? '&' : '?'
-  return `${zaloUrl}${separator}text=${encodeURIComponent(message)}`
+export const fallbackWholesaleCustomer = {
+  id: 'tran-long-demo',
+  name: 'Trần Long',
+  slug: 'tran-long-7bc3ps',
+  contactPerson: 'Anh Long',
+  greeting: 'Chào anh Long, đây là bảng giá sỉ dành riêng cho quán của anh.',
+  isActive: true,
+}
+
+export async function findWholesaleCustomer(slug: string) {
+  const fallback =
+    slug === fallbackWholesaleCustomer.slug ? fallbackWholesaleCustomer : undefined
+  return findOne('wholesale-customers', slug, fallback)
 }
 
 export function plainTextFromRichText(value: unknown): string {

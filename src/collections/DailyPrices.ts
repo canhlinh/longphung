@@ -56,6 +56,27 @@ export const DailyPrices: CollectionConfig = {
       required: true,
     },
     {
+      name: 'displayUnit',
+      type: 'text',
+      label: 'Đơn vị hiển thị',
+      admin: {
+        description: 'Nhãn đơn vị đầy đủ trên bảng giá sỉ.',
+      },
+    },
+    {
+      name: 'priceTiers',
+      type: 'json',
+      label: 'Bậc giá',
+      admin: {
+        description: 'Danh sách bậc giá sỉ/lẻ theo quy cách.',
+      },
+    },
+    {
+      name: 'externalKey',
+      type: 'text',
+      label: 'Khóa nguồn',
+    },
+    {
       name: 'price',
       type: 'number',
       label: 'Giá lẻ',

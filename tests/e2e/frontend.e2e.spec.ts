@@ -20,4 +20,17 @@ test.describe('Frontend', () => {
     await page.goto('/danh-muc/hai-san-tuoi')
     await expect(page.locator('h1')).toContainText(/Hải sản|Sản phẩm/i)
   })
+
+  test('can open wholesale customer price board', async ({ page }) => {
+    await page.goto('/bg/tran-long-7bc3ps')
+
+    await expect(page).toHaveTitle(/Bảng Giá Hải Sản/)
+    await expect(page.getByText('Trợ lý chọn hàng theo nhu cầu')).toBeVisible()
+    await expect(page.getByText('KHÁCH HÀNG THÂN THIẾT')).toBeVisible()
+  })
+
+  test('shows 404 for unknown wholesale link', async ({ page }) => {
+    const resp = await page.goto('/bg/this-wholesale-link-does-not-exist')
+    expect(resp?.status()).toBe(404)
+  })
 })

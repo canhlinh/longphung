@@ -14,7 +14,7 @@ export const SiteSettings: GlobalConfig = {
       name: 'brandName',
       type: 'text',
       label: 'Tên thương hiệu',
-      defaultValue: 'Long Phụng Seafood',
+      defaultValue: 'Hải Sản Long Phụng',
       required: true,
     },
     {
@@ -68,7 +68,7 @@ export const SiteSettings: GlobalConfig = {
           name: 'title',
           type: 'text',
           label: 'Tiêu đề SEO',
-          defaultValue: 'Long Phụng Seafood',
+          defaultValue: 'Hải Sản Long Phụng',
         },
         {
           name: 'description',

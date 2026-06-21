@@ -62,7 +62,7 @@ async function seed() {
   await payload.updateGlobal({
     slug: 'site-settings',
     data: {
-      brandName: 'Long Phụng Seafood',
+      brandName: 'Hải Sản Long Phụng',
       tagline: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
       hotline: '0900 000 000',
       zaloUrl: 'https://zalo.me/0900000000',
@@ -251,7 +251,23 @@ async function seed() {
     })
   }
 
+  await upsertBySlug(payload, 'wholesale-customers', 'tran-long-7bc3ps', {
+    name: 'Trần Long',
+    slug: 'tran-long-7bc3ps',
+    contactPerson: 'Anh Long',
+    phone: '0901 234 567',
+    greeting: 'Chào anh Long, đây là bảng giá sỉ dành riêng cho quán của anh.',
+    storeDisplayName: null,
+    saleName: null,
+    salePhone: null,
+    bossName: null,
+    bossPhone: null,
+    promoText: null,
+    isActive: true,
+  })
+
   console.log(`Seed complete. Admin: ${adminEmail} / ${adminPassword}`)
+  console.log('Wholesale demo link: /bg/tran-long-7bc3ps')
   process.exit(0)
 }
 

@@ -14,6 +14,7 @@ import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { Products } from './collections/Products'
 import { Users } from './collections/Users'
+import { WholesaleCustomers } from './collections/WholesaleCustomers'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -33,7 +34,7 @@ export default buildConfig({
     supportedLanguages: { vi },
     fallbackLanguage: 'vi',
   },
-  collections: [Users, Media, Categories, Products, DailyPrices, Banners, Posts],
+  collections: [Users, Media, Categories, Products, DailyPrices, Banners, Posts, WholesaleCustomers],
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

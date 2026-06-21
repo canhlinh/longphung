@@ -134,6 +134,39 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: 'sourceImageUrl',
+      type: 'text',
+      label: 'Ảnh nguồn (URL)',
+      admin: {
+        description: 'URL ảnh import từ bảng giá bên ngoài.',
+      },
+    },
+    {
+      name: 'externalKey',
+      type: 'text',
+      label: 'Khóa nguồn',
+      admin: {
+        description: 'ID sản phẩm từ hệ thống import.',
+      },
+    },
+    {
+      name: 'isNewListing',
+      type: 'checkbox',
+      label: 'Mới về',
+      defaultValue: false,
+    },
+    {
+      name: 'priceDirection',
+      type: 'select',
+      label: 'Biến động giá',
+      options: [
+        { label: 'Không', value: 'none' },
+        { label: 'Tăng', value: 'up' },
+        { label: 'Giảm', value: 'down' },
+      ],
+      defaultValue: 'none',
+    },
+    {
       name: 'description',
       type: 'richText',
       label: 'Mô tả chi tiết',
