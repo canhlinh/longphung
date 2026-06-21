@@ -225,7 +225,10 @@ export function getMediaUrl(media: unknown, fallbackIndex = 0): string {
 }
 
 export function getProductImage(product: unknown, fallbackIndex = 0): string {
-  const p = product as { images?: Array<{ image?: unknown }> } | null | undefined
+  const p = product as { images?: Array<{ image?: unknown }>; sourceImageUrl?: string } | null | undefined
+  if (p?.sourceImageUrl) {
+    return p.sourceImageUrl
+  }
   const image = p?.images?.[0]?.image
   return getMediaUrl(image, fallbackIndex)
 }

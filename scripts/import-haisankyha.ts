@@ -185,6 +185,41 @@ async function importData() {
     const stockStatus = (variant.on_hand || 0) > 0 ? 'in_stock' : 'preorder'
     const imageUrl = absoluteImageUrl(card.image)
 
+    const existingProductQuery = await payload.find({
+      collection: 'products',
+      limit: 1,
+      where: { slug: { equals: slug } },
+    })
+    const existingProduct = existingProductQuery.docs[0]
+
+    let images = existingProduct?.images || []
+    if (images.length === 0 && imageUrl) {
+      try {
+        const res = await fetch(imageUrl)
+        if (res.ok) {
+          const arrayBuffer = await res.arrayBuffer()
+          const buffer = Buffer.from(arrayBuffer)
+          const mimeType = res.headers.get('content-type') || 'image/jpeg'
+          const extension = mimeType.split('/')[1] || 'jpg'
+          const fileName = `${slug}-${Date.now()}.${extension}`
+
+          const media = await payload.create({
+            collection: 'media',
+            data: { alt: card.name },
+            file: {
+              data: buffer,
+              mimetype: mimeType,
+              name: fileName,
+              size: buffer.length,
+            },
+          })
+          images = [{ image: media.id }]
+        }
+      } catch (err) {
+        console.error(`Failed to download/upload image for ${slug}:`, err)
+      }
+    }
+
     const product = await upsertBySlug(payload, 'products', slug, {
       _status: 'published',
       name: card.name,
@@ -197,6 +232,7 @@ async function importData() {
       bestSeller: false,
       shortDescription: card.name,
       sourceImageUrl: imageUrl,
+      images,
       externalKey: card.key,
       isNewListing: Boolean(card.isNew),
       priceDirection: card.dir || 'none',

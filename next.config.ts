@@ -28,6 +28,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '*.public.blob.vercel-storage.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'nv.haisankyha.vn',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn-images.kiotviet.vn',
+      },
     ],
   },
   webpack: (webpackConfig, { isServer }) => {

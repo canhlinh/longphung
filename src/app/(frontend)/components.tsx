@@ -103,9 +103,9 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
         alt={banner?.title || 'Hải sản Long Phụng'}
         className="hero-image"
         src={imageUrl}
-        width={1200}
-        height={630}
+        fill
         priority
+        style={{ objectFit: 'cover' }}
       />
       <div className="hero-content">
         <p className="eyebrow">Tươi mỗi ngày · Giá rõ ràng · Giao nhanh</p>
