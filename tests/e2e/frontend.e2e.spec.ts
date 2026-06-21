@@ -25,7 +25,7 @@ test.describe('Frontend', () => {
     await page.goto('/bg/tran-long-7bc3ps')
 
     await expect(page).toHaveTitle(/Bảng Giá Hải Sản/)
-    await expect(page.getByText('Trợ lý chọn hàng theo nhu cầu')).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Gợi ý nhanh theo nhu cầu kinh doanh' })).toBeVisible()
     await expect(page.getByText('KHÁCH HÀNG THÂN THIẾT')).toBeVisible()
   })
 

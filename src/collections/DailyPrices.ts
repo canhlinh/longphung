@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { admins } from '@/access/admins'
+import { admins, authenticated } from '@/access/admins'
 import { UNIT_OPTIONS } from '@/lib/constants'
 
 export const DailyPrices: CollectionConfig = {
@@ -88,6 +88,9 @@ export const DailyPrices: CollectionConfig = {
           name: 'pco',
           type: 'number',
           label: 'Giá sỉ (pco)',
+          access: {
+            read: authenticated,
+          },
         },
       ],
     },
@@ -108,6 +111,9 @@ export const DailyPrices: CollectionConfig = {
       type: 'number',
       label: 'Giá sỉ',
       min: 0,
+      access: {
+        read: authenticated,
+      },
     },
     {
       name: 'note',

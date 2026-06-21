@@ -35,16 +35,6 @@ const AI_CHIPS: Array<[string, string]> = [
   ['Bán lẻ', 'hải sản bán lẻ phổ biến'],
 ]
 
-const GREET_QUOTES = [
-  'Chúc anh/chị một ngày buôn may bán đắt! 🐟',
-  'Hàng tươi mỗi ngày — chúc cửa hàng mình hôm nay đông khách! 🌟',
-  'Mỗi đơn hàng là một niềm tin, cảm ơn anh/chị rất nhiều! 💙',
-  'Chúc anh/chị sức khỏe dồi dào & kinh doanh phát đạt! 🍀',
-  'Cảm ơn anh/chị đã đồng hành — chúc một ngày thật nhiều năng lượng! ☀️',
-  'Hải sản tươi ngon, giá tốt mỗi ngày dành riêng cho anh/chị! 🦐',
-  'Chúc anh/chị một ngày làm ăn thuận lợi, tiền vào như nước! 💰',
-]
-
 function noAccent(value: string): string {
   return value
     .toLowerCase()
@@ -424,7 +414,6 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
         {!meta.retail_only && card.dir === 'up' ? <span className="badge-dir badge-up">↑ Giá tăng</span> : null}
         {!meta.retail_only && card.dir === 'down' ? <span className="badge-dir badge-down">↓ Giá giảm</span> : null}
         {card.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img alt={card.name} className="card-img" loading="lazy" src={card.image} />
         ) : (
           <div
@@ -908,7 +897,6 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
       {socialPop ? (
         <div className="sp-pop on">
           {socialPop.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <img alt="" src={socialPop.image} />
           ) : (
             <div

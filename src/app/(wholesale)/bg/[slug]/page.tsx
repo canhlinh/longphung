@@ -42,7 +42,7 @@ export default async function WholesaleCustomerPage({ params }: PageProps) {
   const [customer, settings, prices, categories] = await Promise.all([
     findWholesaleCustomer(slug),
     getSettings(),
-    findAllDocs('daily-prices', { sort: 'sortOrder' }, fallbackPrices),
+    findAllDocs('daily-prices', { overrideAccess: true, sort: 'sortOrder' }, fallbackPrices),
     findDocs('categories', { limit: 100, sort: 'sortOrder' }, fallbackCategories),
   ])
 

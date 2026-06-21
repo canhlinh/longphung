@@ -7,6 +7,8 @@ export const admins: Access = ({ req: { user } }) => {
   return Boolean(u && u.role === 'admin')
 }
 
+export const authenticated: Access = ({ req: { user } }) => Boolean(user)
+
 export const anyone: Access = () => true
 
 export const publishedOrAdmin: Access = ({ req: { user } }) => {

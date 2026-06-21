@@ -140,6 +140,7 @@ export async function findDocs<T extends AnyDoc>(
       collection: collection as any,
       depth: 2,
       limit: 20,
+      overrideAccess: false,
       ...options,
     })
 
@@ -168,6 +169,7 @@ export async function findAllDocs<T extends AnyDoc>(
         collection: collection as any,
         depth: 2,
         limit: pageSize,
+        overrideAccess: false,
         page,
         ...options,
       })
@@ -208,7 +210,10 @@ export async function findOne<T extends AnyDoc>(
 export async function getSettings() {
   try {
     const payload = await getPayloadClient()
-    return (await payload.findGlobal({ slug: 'site-settings' as any })) as typeof fallbackSettings
+    return (await payload.findGlobal({
+      slug: 'site-settings' as any,
+      overrideAccess: false,
+    })) as typeof fallbackSettings
   } catch (err) {
     console.error('[storefront] getSettings failed:', err)
     return fallbackSettings
@@ -253,7 +258,26 @@ export const fallbackWholesaleCustomer = {
 export async function findWholesaleCustomer(slug: string) {
   const fallback =
     slug === fallbackWholesaleCustomer.slug ? fallbackWholesaleCustomer : undefined
-  return findOne('wholesale-customers', slug, fallback)
+
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'wholesale-customers' as any,
+      depth: 0,
+      limit: 1,
+      overrideAccess: true,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    })
+
+    return (result.docs[0] as AnyDoc | undefined) || fallback || null
+  } catch (err) {
+    console.error(`[storefront] findWholesaleCustomer failed for ${slug}:`, err)
+    return fallback || null
+  }
 }
 
 export function plainTextFromRichText(value: unknown): string {

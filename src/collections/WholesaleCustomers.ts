@@ -18,17 +18,7 @@ export const WholesaleCustomers: CollectionConfig = {
   access: {
     create: admins,
     delete: admins,
-    read: ({ req: { user } }) => {
-      if (user) {
-        return true
-      }
-
-      return {
-        isActive: {
-          equals: true,
-        },
-      }
-    },
+    read: admins,
     update: admins,
   },
   hooks: {

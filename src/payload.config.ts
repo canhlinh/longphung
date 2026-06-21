@@ -21,6 +21,15 @@ import { SiteSettings } from './globals/SiteSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+if (process.env.NODE_ENV === 'production') {
+  if (!process.env.PAYLOAD_SECRET) {
+    throw new Error('PAYLOAD_SECRET is required in production')
+  }
+  if (!process.env.DATABASE_URL && !process.env.POSTGRES_URL) {
+    throw new Error('DATABASE_URL or POSTGRES_URL is required in production')
+  }
+}
+
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || '',
   admin: {

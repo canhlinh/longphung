@@ -34,6 +34,7 @@ export default async function PricePage(props: {
     payload.find({
       collection: 'daily-prices',
       limit: 20,
+      overrideAccess: false,
       page,
       sort: 'sortOrder',
       where,

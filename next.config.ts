@@ -12,6 +12,9 @@ const s3ImagePattern = getS3ImageRemotePattern()
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  turbopack: {
+    root: dirname,
+  },
   serverExternalPackages: [
     'pino',
     'pino-pretty',
