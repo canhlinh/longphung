@@ -61,6 +61,7 @@ export default buildConfig({
       idleTimeoutMillis: process.env.CI || process.env.VERCEL ? 500 : 10000, 
     },
     prodMigrations: migrations,
+    push: false,
   }),
   // Basic startup validation to catch missing required envs early (Issue 21)
   onInit: async (payload) => {
