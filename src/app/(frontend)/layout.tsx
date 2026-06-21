@@ -4,9 +4,8 @@ import { Footer, Header } from './components'
 import './styles.css'
 import { fallbackCategories, getSettings, findDocs } from '@/lib/storefront'
 
-// Removed force-dynamic to allow caching/revalidation. Use revalidate for periodic refresh.
-// For production, consider Payload hooks + revalidatePath or unstable_cache with tags.
-export const revalidate = 60
+// Render at request time so Docker/CI builds do not need a database connection.
+export const dynamic = 'force-dynamic'
 
 export const metadata = {
   description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
