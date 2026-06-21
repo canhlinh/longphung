@@ -385,9 +385,9 @@ export interface WholesaleCustomer {
   id: number;
   name: string;
   /**
-   * Tự tạo khi lưu. Ví dụ: tran-long-7bc3ps
+   * Mã này được hệ thống tự động tạo khi bạn lưu.
    */
-  slug: string;
+  slug?: string | null;
   /**
    * Gửi link này cho khách sỉ.
    */

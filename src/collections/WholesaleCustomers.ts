@@ -10,6 +10,7 @@ export const WholesaleCustomers: CollectionConfig = {
     plural: 'Khách sỉ',
   },
   admin: {
+    group: 'Bảng sỉ',
     defaultColumns: ['name', 'slug', 'contactPerson', 'isActive'],
     useAsTitle: 'name',
     description: 'Mỗi khách sỉ có một link riêng dạng /bg/ten-khach-xxxxxx để xem giá sỉ và đặt hàng.',
@@ -50,11 +51,12 @@ export const WholesaleCustomers: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      label: 'Link đặt hàng',
-      required: true,
+      label: 'Mã khách hàng (tự tạo)',
       unique: true,
       admin: {
-        description: 'Tự tạo khi lưu. Ví dụ: tran-long-7bc3ps',
+        readOnly: true,
+        position: 'sidebar',
+        description: 'Mã này được hệ thống tự động tạo khi bạn lưu.',
       },
     },
     {

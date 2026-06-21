@@ -11,6 +11,7 @@ export const Products: CollectionConfig = {
     plural: 'Sản phẩm',
   },
   admin: {
+    group: 'Cửa hàng',
     defaultColumns: ['name', 'category', 'retailPrice', 'stockStatus', '_status'],
     useAsTitle: 'name',
   },

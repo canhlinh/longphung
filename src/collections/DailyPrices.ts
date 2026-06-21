@@ -10,6 +10,7 @@ export const DailyPrices: CollectionConfig = {
     plural: 'Bảng giá',
   },
   admin: {
+    group: 'Bảng sỉ',
     defaultColumns: ['date', 'product', 'displayName', 'price', 'isActive'],
     useAsTitle: 'displayName',
   },

@@ -10,6 +10,7 @@ export const Categories: CollectionConfig = {
     plural: 'Danh mục',
   },
   admin: {
+    group: 'Cửa hàng',
     defaultColumns: ['name', 'slug', 'featured', 'sortOrder'],
     useAsTitle: 'name',
   },
