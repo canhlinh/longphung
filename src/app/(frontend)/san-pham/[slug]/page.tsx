@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = product.seo?.description || product.shortDescription
 
   return {
-    title: product.seo?.title || `${product.name} | Long Phung Seafood`,
+    title: product.seo?.title || `${product.name} | Long Phụng Seafood`,
     description,
   }
 }
@@ -65,7 +65,7 @@ export default async function ProductPage({ params }: PageProps) {
     fallbackProducts.filter((item) => item.slug !== product.slug),
   )
 
-  const message = `Toi muon dat/hoi gia ${product.name} (${product.slug})`
+  const message = `Tôi muốn đặt/hỏi giá ${product.name} (${product.slug})`
 
   return (
     <>
@@ -84,50 +84,50 @@ export default async function ProductPage({ params }: PageProps) {
           <dl className="spec-list">
             {product.wholesalePrice ? (
               <>
-                <dt>Gia si</dt>
+                <dt>Giá sỉ</dt>
                 <dd>{formatPrice(product.wholesalePrice)}</dd>
               </>
             ) : null}
             {product.size ? (
               <>
-                <dt>Quy cach</dt>
+                <dt>Quy cách</dt>
                 <dd>{product.size}</dd>
               </>
             ) : null}
             {product.origin ? (
               <>
-                <dt>Nguon hang</dt>
+                <dt>Nguồn hàng</dt>
                 <dd>{product.origin}</dd>
               </>
             ) : null}
           </dl>
           <div className="hero-actions">
             <a className="button primary" href={createZaloUrl((settings as any).zaloUrl, message)}>
-              <MessageCircle size={18} /> Dat qua Zalo
+              <MessageCircle size={18} /> Đặt qua Zalo
             </a>
             <a className="button secondary" href={`tel:${(settings as any).hotline.replace(/\s/g, '')}`}>
-              <Phone size={18} /> Goi ngay
+              <Phone size={18} /> Gọi ngay
             </a>
           </div>
         </div>
       </section>
       <section className="page-section two-column">
         <article>
-          <SectionHeader title="Thong tin san pham" />
+          <SectionHeader title="Thông tin sản phẩm" />
           <p>
             {plainTextFromRichText(product.description) ||
               product.shortDescription ||
-              'Admin co the cap nhat mo ta chi tiet trong Payload.'}
+              'Admin có thể cập nhật mô tả chi tiết trong Payload.'}
           </p>
         </article>
         <article>
-          <SectionHeader title="Bao quan va che bien" />
-          <p>{product.preservationNotes || 'Giu lanh va dung som sau khi nhan hang.'}</p>
-          <p>{product.cookingNotes || 'Lien he Long Phung de duoc goi y cach che bien phu hop.'}</p>
+          <SectionHeader title="Bảo quản và chế biến" />
+          <p>{product.preservationNotes || 'Giữ lạnh và dùng sớm sau khi nhận hàng.'}</p>
+          <p>{product.cookingNotes || 'Liên hệ Long Phụng để được gợi ý cách chế biến phù hợp.'}</p>
         </article>
       </section>
       <section className="page-section">
-        <SectionHeader title="San pham lien quan" eyebrow="Co the ban can" />
+        <SectionHeader title="Sản phẩm liên quan" eyebrow="Có thể bạn cần" />
         <ProductGrid products={related} settings={settings} />
       </section>
       <ContactBand settings={settings} />

@@ -25,7 +25,7 @@ describe('API', () => {
 
   it('formatPrice and stockLabel helpers work', () => {
     expect(formatPrice(360000)).toContain('360.000')
-    expect(stockLabel('preorder')).toBe('Sap ve')
+    expect(stockLabel('preorder')).toBe('Sắp về')
   })
 
   it('admins access requires role=admin', () => {

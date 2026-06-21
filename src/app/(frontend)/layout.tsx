@@ -9,8 +9,8 @@ import { fallbackCategories, getSettings, findDocs } from '@/lib/storefront'
 export const revalidate = 60
 
 export const metadata = {
-  description: 'Hai san tuoi song, sashimi, combo gia dinh va bang gia moi ngay.',
-  title: 'Long Phung Seafood',
+  description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
+  title: 'Long Phụng Seafood',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

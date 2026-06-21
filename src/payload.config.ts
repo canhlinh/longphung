@@ -1,6 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { vi } from '@payloadcms/translations/languages/vi'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -24,6 +25,13 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: '— Long Phụng',
+    },
+  },
+  i18n: {
+    supportedLanguages: { vi },
+    fallbackLanguage: 'vi',
   },
   collections: [Users, Media, Categories, Products, DailyPrices, Banners, Posts],
   globals: [SiteSettings],

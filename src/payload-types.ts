@@ -229,7 +229,7 @@ export interface Product {
   retailPrice?: number | null;
   wholesalePrice?: number | null;
   /**
-   * Use for flexible pricing such as "Lien he" or "Theo ngay".
+   * Dùng cho giá linh hoạt như "Liên hệ" hoặc "Theo ngày".
    */
   priceLabel?: string | null;
   stockStatus: 'in_stock' | 'preorder' | 'out_of_stock';

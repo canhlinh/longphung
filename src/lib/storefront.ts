@@ -1,19 +1,21 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
+
+import { STOCK_LABELS, STOCK_STATUS } from '@/lib/labels'
 // Stronger types from '@/payload-types' can be adopted for findDocs/get* when desired.
 
 type AnyDoc = Record<string, unknown>
 
 export const fallbackSettings: Record<string, unknown> = {
-  brandName: 'Long Phung Seafood',
-  tagline: 'Hai san tuoi moi ngay cho gia dinh va nha hang',
+  brandName: 'Long Phụng Seafood',
+  tagline: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
   hotline: '0900 000 000',
   zaloUrl: 'https://zalo.me/0900000000',
-  address: 'Cap nhat dia chi cua Long Phung',
-  businessHours: '06:00 - 20:00 hang ngay',
+  address: 'Cập nhật địa chỉ của Long Phụng',
+  businessHours: '06:00 - 20:00 hằng ngày',
   seo: {
-    title: 'Long Phung Seafood',
-    description: 'Hai san tuoi song, sashimi, combo gia dinh va bang gia moi ngay.',
+    title: 'Long Phụng Seafood',
+    description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
   },
 }
 
@@ -26,23 +28,23 @@ export const fallbackImages = [
 export const fallbackCategories = [
   {
     id: 'hai-san-tuoi',
-    name: 'Hai san tuoi',
+    name: 'Hải sản tươi',
     slug: 'hai-san-tuoi',
-    description: 'Tom, cua, ghe, muc va ca duoc cap nhat moi ngay.',
+    description: 'Tôm, cua, ghẹ, mực và cá được cập nhật mỗi ngày.',
     featured: true,
   },
   {
     id: 'sashimi',
     name: 'Sashimi',
     slug: 'sashimi',
-    description: 'Ca hoi, ca trich ep trung, bach tuoc va set an lien.',
+    description: 'Cá hồi, cá trích ép trứng, bạch tuộc và set ăn liền.',
     featured: true,
   },
   {
     id: 'combo-gia-dinh',
-    name: 'Combo gia dinh',
+    name: 'Combo gia đình',
     slug: 'combo-gia-dinh',
-    description: 'Combo nau lau, tiec nho va bua an nhanh trong ngay.',
+    description: 'Combo nấu lẩu, tiệc nhỏ và bữa ăn nhanh trong ngày.',
     featured: true,
   },
 ]
@@ -50,46 +52,46 @@ export const fallbackCategories = [
 export const fallbackProducts: any[] = [
   {
     id: 'tom-su-song',
-    name: 'Tom su song',
+    name: 'Tôm sú sống',
     slug: 'tom-su-song',
     unit: 'kg',
     retailPrice: 360000,
     wholesalePrice: 330000,
     stockStatus: 'in_stock',
-    origin: 'Vung nuoi mien Tay',
+    origin: 'Vùng nuôi miền Tây',
     size: '20-25 con/kg',
     featured: true,
     bestSeller: true,
-    shortDescription: 'Tom su con khoe, thit chac, hop hap bia, nuong muoi ot hoac nau lau.',
+    shortDescription: 'Tôm sú còn khỏe, thịt chắc, hợp hấp bia, nướng muối ớt hoặc nấu lẩu.',
     category: fallbackCategories[0],
   },
   {
     id: 'ca-hoi-sashimi',
-    name: 'Ca hoi sashimi',
+    name: 'Cá hồi sashimi',
     slug: 'ca-hoi-sashimi',
     unit: 'kg',
     retailPrice: 620000,
     wholesalePrice: 590000,
     stockStatus: 'in_stock',
     origin: 'Na Uy',
-    size: 'Cat phan theo yeu cau',
+    size: 'Cắt phần theo yêu cầu',
     featured: true,
     bestSeller: true,
-    shortDescription: 'Thit ca beo, mau dep, giao lanh trong ngay cho gia dinh va nha hang.',
+    shortDescription: 'Thịt cá béo, màu đẹp, giao lạnh trong ngày cho gia đình và nhà hàng.',
     category: fallbackCategories[1],
   },
   {
     id: 'combo-lau-hai-san',
-    name: 'Combo lau hai san',
+    name: 'Combo lẩu hải sản',
     slug: 'combo-lau-hai-san',
     unit: 'set',
     retailPrice: 499000,
     stockStatus: 'in_stock',
-    origin: 'Long Phung',
-    size: '3-4 nguoi',
+    origin: 'Long Phụng',
+    size: '3-4 người',
     featured: true,
     bestSeller: false,
-    shortDescription: 'Set tien loi gom tom, muc, ca vien va rau gia vi co ban cho bua lau nhanh.',
+    shortDescription: 'Set tiện lợi gồm tôm, mực, cá viên và rau gia vị cơ bản cho bữa lẩu nhanh.',
     category: fallbackCategories[2],
   },
 ]
@@ -97,16 +99,16 @@ export const fallbackProducts: any[] = [
 export const fallbackPosts: any[] = [
   {
     id: 'cach-chon-hai-san-tuoi',
-    title: 'Cach chon hai san tuoi cho bua an gia dinh',
+    title: 'Cách chọn hải sản tươi cho bữa ăn gia đình',
     slug: 'cach-chon-hai-san-tuoi',
-    excerpt: 'Nhung dau hieu don gian de nhan biet tom, cua, muc va ca con tuoi khi dat hang.',
+    excerpt: 'Những dấu hiệu đơn giản để nhận biết tôm, cua, mực và cá còn tươi khi đặt hàng.',
     featured: true,
   },
   {
     id: 'bao-quan-sashimi',
-    title: 'Bao quan sashimi tai nha nhu the nao',
+    title: 'Bảo quản sashimi tại nhà như thế nào',
     slug: 'bao-quan-sashimi',
-    excerpt: 'Cach giu lanh, thoi gian dung ngon va nhung luu y khi nhan hang sashimi.',
+    excerpt: 'Cách giữ lạnh, thời gian dùng ngon và những lưu ý khi nhận hàng sashimi.',
     featured: true,
   },
 ]
@@ -118,7 +120,7 @@ export const fallbackPrices: any[] = fallbackProducts.map((product, index) => ({
   unit: product.unit,
   price: product.retailPrice,
   wholesalePrice: product.wholesalePrice,
-  note: index === 0 ? 'Gia tot cho don dat truoc 10h' : 'Cap nhat moi ngay',
+  note: index === 0 ? 'Giá tốt cho đơn đặt trước 10h' : 'Cập nhật mỗi ngày',
   isActive: true,
   product,
 }))
@@ -201,7 +203,7 @@ export function formatPrice(value?: number | null, label?: string | null): strin
   }
 
   if (!value) {
-    return 'Lien he'
+    return 'Liên hệ'
   }
 
   return new Intl.NumberFormat('vi-VN', {
@@ -212,9 +214,9 @@ export function formatPrice(value?: number | null, label?: string | null): strin
 }
 
 export function stockLabel(status?: string): string {
-  if (status === 'preorder') return 'Sap ve'
-  if (status === 'out_of_stock') return 'Het hang'
-  return 'Con hang'
+  if (status === STOCK_STATUS.PREORDER) return STOCK_LABELS[STOCK_STATUS.PREORDER]
+  if (status === STOCK_STATUS.OUT_OF_STOCK) return STOCK_LABELS[STOCK_STATUS.OUT_OF_STOCK]
+  return STOCK_LABELS[STOCK_STATUS.IN_STOCK]
 }
 
 export function createZaloUrl(zaloUrl: string, message: string): string {

@@ -46,14 +46,14 @@ export function Header({ categories, settings }: PropsWithSettings & { categorie
           </span>
         </Link>
         <nav className="main-nav">
-          <Link href="/bang-gia">Bang gia</Link>
+          <Link href="/bang-gia">Bảng giá</Link>
           {categories.slice(0, 4).map((category) => (
             <Link href={`/danh-muc/${category.slug}`} key={category.id}>
               {category.name}
             </Link>
           ))}
-          <Link href="/bai-viet">Mon ngon</Link>
-          <Link href="/lien-he">Lien he</Link>
+          <Link href="/bai-viet">Món ngon</Link>
+          <Link href="/lien-he">Liên hệ</Link>
         </nav>
         <a className="nav-cta" href={settings.zaloUrl}>
           <MessageCircle size={18} /> Zalo
@@ -77,7 +77,7 @@ export function Footer({ categories, settings }: PropsWithSettings & { categorie
         <p>{settings.address}</p>
       </div>
       <div>
-        <h3>Danh muc</h3>
+        <h3>Danh mục</h3>
         {categories.slice(0, 5).map((category) => (
           <Link href={`/danh-muc/${category.slug}`} key={category.id}>
             {category.name}
@@ -85,10 +85,10 @@ export function Footer({ categories, settings }: PropsWithSettings & { categorie
         ))}
       </div>
       <div>
-        <h3>Dat hang</h3>
+        <h3>Đặt hàng</h3>
         <a href={`tel:${settings.hotline.replace(/\s/g, '')}`}>{settings.hotline}</a>
         <a href={settings.zaloUrl}>Chat Zalo</a>
-        <Link href="/bang-gia">Xem bang gia hom nay</Link>
+        <Link href="/bang-gia">Xem bảng giá hôm nay</Link>
       </div>
     </footer>
   )
@@ -100,7 +100,7 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
   return (
     <section className="hero">
       <Image
-        alt={banner?.title || 'Hai san Long Phung'}
+        alt={banner?.title || 'Hải sản Long Phụng'}
         className="hero-image"
         src={imageUrl}
         width={1200}
@@ -108,18 +108,18 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
         priority
       />
       <div className="hero-content">
-        <p className="eyebrow">Tuoi moi ngay · Gia ro rang · Giao nhanh</p>
-        <h1>{banner?.title || 'Hai san tuoi cho bua an gia dinh va bep nha hang'}</h1>
+        <p className="eyebrow">Tươi mỗi ngày · Giá rõ ràng · Giao nhanh</p>
+        <h1>{banner?.title || 'Hải sản tươi cho bữa ăn gia đình và bếp nhà hàng'}</h1>
         <p>
           {banner?.subtitle ||
-            'Long Phung cap nhat san pham va bang gia moi ngay, uu tien dat nhanh qua Zalo hoac hotline.'}
+            'Long Phụng cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.'}
         </p>
         <div className="hero-actions">
           <a className="button primary" href={settings.zaloUrl}>
-            <MessageCircle size={18} /> Dat qua Zalo
+            <MessageCircle size={18} /> Đặt qua Zalo
           </a>
           <Link className="button secondary" href="/bang-gia">
-            Xem bang gia
+            Xem bảng giá
           </Link>
         </div>
       </div>
@@ -129,14 +129,14 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
 
 export function Commitments() {
   const items = [
-    { icon: Fish, title: 'Hang tuoi moi ngay', text: 'Lua chon theo mua va tinh trang hang that.' },
-    { icon: Snowflake, title: 'Giu lanh dung cach', text: 'Dong goi phu hop cho giao nhanh trong ngay.' },
-    { icon: Truck, title: 'Giao nhanh', text: 'Toi uu cho don gia dinh, quan an va nha hang.' },
-    { icon: ShieldCheck, title: 'Gia minh bach', text: 'Bang gia cap nhat, co gia si cho don phu hop.' },
+    { icon: Fish, title: 'Hàng tươi mỗi ngày', text: 'Lựa chọn theo mùa và tình trạng hàng thật.' },
+    { icon: Snowflake, title: 'Giữ lạnh đúng cách', text: 'Đóng gói phù hợp cho giao nhanh trong ngày.' },
+    { icon: Truck, title: 'Giao nhanh', text: 'Tối ưu cho đơn gia đình, quán ăn và nhà hàng.' },
+    { icon: ShieldCheck, title: 'Giá minh bạch', text: 'Bảng giá cập nhật, có giá sỉ cho đơn phù hợp.' },
   ]
 
   return (
-    <section className="commitments" aria-label="Cam ket dich vu">
+    <section className="commitments" aria-label="Cam kết dịch vụ">
       {items.map((item) => {
         const Icon = item.icon
         return (
@@ -202,7 +202,7 @@ export function ProductCard({
   product,
   settings,
 }: PropsWithSettings & { index: number; product: any }) {
-  const message = `Toi muon hoi ve ${product.name} (${product.slug})`
+  const message = `Tôi muốn hỏi về ${product.name} (${product.slug})`
 
   return (
     <article className="product-card">
@@ -224,7 +224,7 @@ export function ProductCard({
             <MessageCircle size={16} /> Zalo
           </a>
           <a href={`tel:${settings.hotline.replace(/\s/g, '')}`}>
-            <Phone size={16} /> Goi
+            <Phone size={16} /> Gọi
           </a>
         </div>
       </div>
@@ -236,15 +236,15 @@ export function PriceTable({ prices, settings }: PropsWithSettings & { prices: a
   return (
     <div className="price-table">
       <div className="price-row price-head">
-        <span>San pham</span>
-        <span>Gia le</span>
-        <span>Gia si</span>
-        <span>Dat hang</span>
+        <span>Sản phẩm</span>
+        <span>Giá lẻ</span>
+        <span>Giá sỉ</span>
+        <span>Đặt hàng</span>
       </div>
       {prices.map((item) => {
         const product = typeof item.product === 'object' ? item.product : null
         const slug = product?.slug || item.displayName
-        const message = `Toi muon hoi bang gia ${item.displayName}`
+        const message = `Tôi muốn hỏi bảng giá ${item.displayName}`
 
         return (
           <div className="price-row" key={item.id}>
@@ -257,7 +257,7 @@ export function PriceTable({ prices, settings }: PropsWithSettings & { prices: a
             <span>{formatPrice(item.price)}</span>
             <span>{formatPrice(item.wholesalePrice)}</span>
             <span className="row-actions">
-              {product && <Link href={`/san-pham/${slug}`}>Chi tiet</Link>}
+              {product && <Link href={`/san-pham/${slug}`}>Chi tiết</Link>}
               <a href={createZaloUrl(settings.zaloUrl, message)}>Zalo</a>
             </span>
           </div>
@@ -273,7 +273,7 @@ export function PostGrid({ posts }: { posts: any[] }) {
       {posts.map((post, index) => (
         <Link className="post-card" href={`/bai-viet/${post.slug}`} key={post.id}>
           <Image alt={String(post.title)} src={getMediaUrl(post.coverImage, index + 1)} width={400} height={240} />
-          <span>Vao bep</span>
+          <span>Vào bếp</span>
           <h3>{post.title}</h3>
           <p>{post.excerpt}</p>
         </Link>
@@ -287,7 +287,7 @@ export function SearchEmpty({ title }: { title: string }) {
     <div className="empty-state">
       <Search size={30} />
       <h2>{title}</h2>
-      <p>Noi dung se hien thi sau khi admin xuat ban trong Payload.</p>
+      <p>Nội dung sẽ hiển thị sau khi admin xuất bản trong Payload.</p>
     </div>
   )
 }
@@ -296,8 +296,8 @@ export function ContactBand({ settings }: PropsWithSettings) {
   return (
     <section className="contact-band">
       <div>
-        <p className="eyebrow">Can bao gia nhanh?</p>
-        <h2>Gui danh sach mon qua Zalo, Long Phung se phan hoi trong ngay.</h2>
+        <p className="eyebrow">Cần báo giá nhanh?</p>
+        <h2>Gửi danh sách món qua Zalo, Long Phụng sẽ phản hồi trong ngày.</h2>
       </div>
       <div className="contact-actions">
         <a className="button primary" href={settings.zaloUrl}>

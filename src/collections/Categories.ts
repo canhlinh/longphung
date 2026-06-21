@@ -5,6 +5,10 @@ import { slugify } from '@/lib/slugify'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: {
+    singular: 'Danh mục',
+    plural: 'Danh mục',
+  },
   admin: {
     defaultColumns: ['name', 'slug', 'featured', 'sortOrder'],
     useAsTitle: 'name',
@@ -18,7 +22,6 @@ export const Categories: CollectionConfig = {
   hooks: {
     beforeValidate: [
       ({ data }) => {
-        // Slug generated only if absent. Name changes do not auto-regenerate to protect URLs.
         if (data?.name && !data.slug) {
           data.slug = slugify(data.name)
         }
@@ -30,31 +33,37 @@ export const Categories: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
+      label: 'Tên danh mục',
       required: true,
     },
     {
       name: 'slug',
       type: 'text',
+      label: 'Đường dẫn (slug)',
       required: true,
       unique: true,
     },
     {
       name: 'description',
       type: 'textarea',
+      label: 'Mô tả',
     },
     {
       name: 'image',
       type: 'upload',
+      label: 'Hình ảnh',
       relationTo: 'media',
     },
     {
       name: 'featured',
       type: 'checkbox',
+      label: 'Nổi bật',
       defaultValue: false,
     },
     {
       name: 'sortOrder',
       type: 'number',
+      label: 'Thứ tự hiển thị',
       defaultValue: 0,
     },
   ],

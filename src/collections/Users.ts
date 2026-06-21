@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    singular: 'Người dùng',
+    plural: 'Người dùng',
+  },
   admin: {
     useAsTitle: 'email',
   },
@@ -10,12 +14,14 @@ export const Users: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
+      label: 'Tên',
     },
     {
       name: 'role',
       type: 'select',
+      label: 'Vai trò',
       defaultValue: 'admin',
-      options: [{ label: 'Admin', value: 'admin' }],
+      options: [{ label: 'Quản trị viên', value: 'admin' }],
       required: true,
     },
   ],

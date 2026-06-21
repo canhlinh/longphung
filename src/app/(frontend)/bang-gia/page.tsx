@@ -5,8 +5,8 @@ import { ContactBand, PriceTable, SectionHeader } from '../components'
 import { fallbackPrices, findDocs, getSettings } from '@/lib/storefront'
 
 export const metadata: Metadata = {
-  title: 'Bang gia hom nay | Long Phung Seafood',
-  description: 'Bang gia hai san, sashimi va combo cap nhat moi ngay.',
+  title: 'Bảng giá hôm nay | Long Phụng Seafood',
+  description: 'Bảng giá hải sản, sashimi và combo cập nhật mỗi ngày.',
 }
 
 export default async function PricePage() {
@@ -18,12 +18,12 @@ export default async function PricePage() {
   return (
     <>
       <section className="page-hero compact">
-        <p className="eyebrow">Bang gia</p>
-        <h1>Bang gia hai san hom nay</h1>
-        <p>Gia co the thay doi theo mua, size va tinh trang hang. Chat Zalo de chot gia nhanh.</p>
+        <p className="eyebrow">Bảng giá</p>
+        <h1>Bảng giá hải sản hôm nay</h1>
+        <p>Giá có thể thay đổi theo mùa, size và tình trạng hàng. Chat Zalo để chốt giá nhanh.</p>
       </section>
       <section className="page-section">
-        <SectionHeader title="San pham dang mo ban" eyebrow="Cap nhat moi ngay" />
+        <SectionHeader title="Sản phẩm đang mở bán" eyebrow="Cập nhật mỗi ngày" />
         <PriceTable prices={prices} settings={settings} />
       </section>
       <ContactBand settings={settings} />

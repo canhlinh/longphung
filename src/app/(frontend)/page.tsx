@@ -84,36 +84,36 @@ export default async function HomePage() {
       <section className="page-section">
         <SectionHeader
           actionHref="/bang-gia"
-          actionLabel="Xem bang gia"
-          eyebrow="Danh muc"
-          title="Chon nhanh theo nhu cau"
+          actionLabel="Xem bảng giá"
+          eyebrow="Danh mục"
+          title="Chọn nhanh theo nhu cầu"
         />
         <CategoryGrid categories={categories} />
       </section>
       <section className="page-section">
         <SectionHeader
           actionHref="/bang-gia"
-          actionLabel="Cap nhat hom nay"
-          eyebrow="Bang gia"
-          title="Gia tot dang co"
+          actionLabel="Cập nhật hôm nay"
+          eyebrow="Bảng giá"
+          title="Giá tốt đang có"
         />
         <PriceTable prices={prices.slice(0, 6)} settings={settings} />
       </section>
       <section className="page-section">
         <SectionHeader
           actionHref="/danh-muc/hai-san-tuoi"
-          actionLabel="Xem them"
-          eyebrow="San pham"
-          title="San pham noi bat"
+          actionLabel="Xem thêm"
+          eyebrow="Sản phẩm"
+          title="Sản phẩm nổi bật"
         />
         <ProductGrid products={products} settings={settings} />
       </section>
       <section className="page-section">
         <SectionHeader
           actionHref="/bai-viet"
-          actionLabel="Tat ca bai viet"
-          eyebrow="Cung vao bep"
-          title="Meo chon va che bien hai san"
+          actionLabel="Tất cả bài viết"
+          eyebrow="Cùng vào bếp"
+          title="Mẹo chọn và chế biến hải sản"
         />
         <PostGrid posts={posts} />
       </section>

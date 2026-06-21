@@ -4,6 +4,7 @@ import { admins, anyone } from '@/access/admins'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
+  label: 'Cài đặt website',
   access: {
     read: anyone,
     update: admins,
@@ -12,57 +13,68 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'brandName',
       type: 'text',
-      defaultValue: 'Long Phung Seafood',
+      label: 'Tên thương hiệu',
+      defaultValue: 'Long Phụng Seafood',
       required: true,
     },
     {
       name: 'tagline',
       type: 'text',
-      defaultValue: 'Hai san tuoi moi ngay cho gia dinh va nha hang',
+      label: 'Khẩu hiệu',
+      defaultValue: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
     },
     {
       name: 'hotline',
       type: 'text',
+      label: 'Hotline',
       defaultValue: '0900 000 000',
       required: true,
     },
     {
       name: 'zaloUrl',
       type: 'text',
+      label: 'Liên kết Zalo',
       defaultValue: 'https://zalo.me/0900000000',
       required: true,
     },
     {
       name: 'address',
       type: 'textarea',
-      defaultValue: 'Cap nhat dia chi cua Long Phung',
+      label: 'Địa chỉ',
+      defaultValue: 'Cập nhật địa chỉ của Long Phụng',
     },
     {
       name: 'email',
       type: 'email',
+      label: 'Email',
     },
     {
       name: 'facebookUrl',
       type: 'text',
+      label: 'Facebook',
     },
     {
       name: 'businessHours',
       type: 'text',
-      defaultValue: '06:00 - 20:00 hang ngay',
+      label: 'Giờ mở cửa',
+      defaultValue: '06:00 - 20:00 hằng ngày',
     },
     {
       name: 'seo',
       type: 'group',
+      label: 'SEO',
       fields: [
         {
           name: 'title',
           type: 'text',
-          defaultValue: 'Long Phung Seafood',
+          label: 'Tiêu đề SEO',
+          defaultValue: 'Long Phụng Seafood',
         },
         {
           name: 'description',
           type: 'textarea',
-          defaultValue: 'Hai san tuoi song, sashimi, combo gia dinh va bang gia moi ngay.',
+          label: 'Mô tả SEO',
+          defaultValue: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
         },
       ],
     },

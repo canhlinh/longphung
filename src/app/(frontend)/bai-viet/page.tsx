@@ -5,8 +5,8 @@ import { PostGrid, SearchEmpty, SectionHeader } from '../components'
 import { fallbackPosts, findDocs } from '@/lib/storefront'
 
 export const metadata: Metadata = {
-  title: 'Mon ngon va meo chon hai san | Long Phung Seafood',
-  description: 'Bai viet huong dan chon, bao quan va che bien hai san.',
+  title: 'Món ngon và mẹo chọn hải sản | Long Phụng Seafood',
+  description: 'Bài viết hướng dẫn chọn, bảo quản và chế biến hải sản.',
 }
 
 export default async function PostsPage() {
@@ -15,13 +15,13 @@ export default async function PostsPage() {
   return (
     <>
       <section className="page-hero compact">
-        <p className="eyebrow">Cung vao bep</p>
-        <h1>Meo chon va che bien hai san</h1>
-        <p>Noi dung SEO giup khach hang chon dung san pham va dat hang tu tin hon.</p>
+        <p className="eyebrow">Cùng vào bếp</p>
+        <h1>Mẹo chọn và chế biến hải sản</h1>
+        <p>Nội dung SEO giúp khách hàng chọn đúng sản phẩm và đặt hàng tự tin hơn.</p>
       </section>
       <section className="page-section">
-        <SectionHeader title="Bai viet moi" />
-        {posts.length ? <PostGrid posts={posts} /> : <SearchEmpty title="Chua co bai viet" />}
+        <SectionHeader title="Bài viết mới" />
+        {posts.length ? <PostGrid posts={posts} /> : <SearchEmpty title="Chưa có bài viết" />}
       </section>
     </>
   )

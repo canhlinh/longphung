@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${category.name} | Long Phung Seafood`,
-    description: category.description || 'Danh muc san pham hai san Long Phung.',
+    title: `${category.name} | Long Phụng Seafood`,
+    description: category.description || 'Danh mục sản phẩm hải sản Long Phụng.',
   }
 }
 
@@ -75,16 +75,16 @@ export default async function CategoryPage({ params }: PageProps) {
   return (
     <>
       <section className="page-hero compact">
-        <p className="eyebrow">Danh muc</p>
-        <h1>{category?.name || 'San pham Long Phung'}</h1>
-        <p>{category?.description || 'Cac san pham dang duoc cap nhat trong Payload admin.'}</p>
+        <p className="eyebrow">Danh mục</p>
+        <h1>{category?.name || 'Sản phẩm Long Phụng'}</h1>
+        <p>{category?.description || 'Các sản phẩm đang được cập nhật trong Payload admin.'}</p>
       </section>
       <section className="page-section">
-        <SectionHeader title="San pham" eyebrow="Dat nhanh qua Zalo" />
+        <SectionHeader title="Sản phẩm" eyebrow="Đặt nhanh qua Zalo" />
         {products.length ? (
           <ProductGrid products={products} settings={settings} />
         ) : (
-          <SearchEmpty title="Chua co san pham trong danh muc nay" />
+          <SearchEmpty title="Chưa có sản phẩm trong danh mục này" />
         )}
       </section>
       <ContactBand settings={settings} />

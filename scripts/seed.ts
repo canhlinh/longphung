@@ -52,7 +52,7 @@ async function seed() {
       collection: 'users',
       data: {
         email: adminEmail,
-        name: 'Long Phung Admin',
+        name: 'Long Phụng Admin',
         password: adminPassword,
         role: 'admin',
       },
@@ -62,35 +62,35 @@ async function seed() {
   await payload.updateGlobal({
     slug: 'site-settings',
     data: {
-      brandName: 'Long Phung Seafood',
-      tagline: 'Hai san tuoi moi ngay cho gia dinh va nha hang',
+      brandName: 'Long Phụng Seafood',
+      tagline: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
       hotline: '0900 000 000',
       zaloUrl: 'https://zalo.me/0900000000',
-      address: 'Cap nhat dia chi cua Long Phung',
-      businessHours: '06:00 - 20:00 hang ngay',
+      address: 'Cập nhật địa chỉ của Long Phụng',
+      businessHours: '06:00 - 20:00 hằng ngày',
       seo: {
-        title: 'Long Phung Seafood',
-        description: 'Hai san tuoi song, sashimi, combo gia dinh va bang gia moi ngay.',
+        title: 'Long Phụng Seafood',
+        description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
       },
     },
   })
 
   const categoryData = [
     {
-      name: 'Hai san tuoi',
-      description: 'Tom, cua, ghe, muc va ca duoc cap nhat moi ngay.',
+      name: 'Hải sản tươi',
+      description: 'Tôm, cua, ghẹ, mực và cá được cập nhật mỗi ngày.',
       featured: true,
       sortOrder: 10,
     },
     {
       name: 'Sashimi',
-      description: 'Ca hoi, ca trich ep trung, bach tuoc va set an lien.',
+      description: 'Cá hồi, cá trích ép trứng, bạch tuộc và set ăn liền.',
       featured: true,
       sortOrder: 20,
     },
     {
-      name: 'Combo gia dinh',
-      description: 'Combo nau lau, tiec nho va bua an nhanh trong ngay.',
+      name: 'Combo gia đình',
+      description: 'Combo nấu lẩu, tiệc nhỏ và bữa ăn nhanh trong ngày.',
       featured: true,
       sortOrder: 30,
     },
@@ -110,47 +110,47 @@ async function seed() {
   const products = [
     {
       categorySlug: 'hai-san-tuoi',
-      name: 'Tom su song',
+      name: 'Tôm sú sống',
       unit: 'kg',
       retailPrice: 360000,
       wholesalePrice: 330000,
       stockStatus: 'in_stock',
-      origin: 'Vung nuoi mien Tay',
+      origin: 'Vùng nuôi miền Tây',
       size: '20-25 con/kg',
       featured: true,
       bestSeller: true,
-      shortDescription: 'Tom su con khoe, thit chac, hop hap bia, nuong muoi ot hoac nau lau.',
-      preservationNotes: 'Giu lanh 0-4 do C va che bien som sau khi nhan.',
-      cookingNotes: 'Hop hap bia, nuong muoi ot hoac nau lau deu phu hop.',
+      shortDescription: 'Tôm sú còn khỏe, thịt chắc, hợp hấp bia, nướng muối ớt hoặc nấu lẩu.',
+      preservationNotes: 'Giữ lạnh 0-4 độ C và chế biến sớm sau khi nhận.',
+      cookingNotes: 'Hợp hấp bia, nướng muối ớt hoặc nấu lẩu đều phù hợp.',
     },
     {
       categorySlug: 'sashimi',
-      name: 'Ca hoi sashimi',
+      name: 'Cá hồi sashimi',
       unit: 'kg',
       retailPrice: 620000,
       wholesalePrice: 590000,
       stockStatus: 'in_stock',
       origin: 'Na Uy',
-      size: 'Cat phan theo yeu cau',
+      size: 'Cắt phần theo yêu cầu',
       featured: true,
       bestSeller: true,
-      shortDescription: 'Thit ca beo, mau dep, giao lanh trong ngay cho gia dinh va nha hang.',
-      preservationNotes: 'Bao quan lanh sau 0-4 do C, dung ngon nhat trong ngay.',
-      cookingNotes: 'Dung sashimi, salad, ap chao nhe hoac sushi roll.',
+      shortDescription: 'Thịt cá béo, màu đẹp, giao lạnh trong ngày cho gia đình và nhà hàng.',
+      preservationNotes: 'Bảo quản lạnh sau 0-4 độ C, dùng ngon nhất trong ngày.',
+      cookingNotes: 'Dùng sashimi, salad, áp chảo nhẹ hoặc sushi roll.',
     },
     {
       categorySlug: 'combo-gia-dinh',
-      name: 'Combo lau hai san',
+      name: 'Combo lẩu hải sản',
       unit: 'set',
       retailPrice: 499000,
       stockStatus: 'in_stock',
-      origin: 'Long Phung',
-      size: '3-4 nguoi',
+      origin: 'Long Phụng',
+      size: '3-4 người',
       featured: true,
       bestSeller: false,
-      shortDescription: 'Set tien loi gom tom, muc, ca vien va rau gia vi co ban cho bua lau nhanh.',
-      preservationNotes: 'Giu lanh va dung trong ngay de co huong vi tot nhat.',
-      cookingNotes: 'Dung voi nuoc lau thai, lau nam hoac lau chua cay.',
+      shortDescription: 'Set tiện lợi gồm tôm, mực, cá viên và rau gia vị cơ bản cho bữa lẩu nhanh.',
+      preservationNotes: 'Giữ lạnh và dùng trong ngày để có hương vị tốt nhất.',
+      cookingNotes: 'Dùng với nước lẩu thái, lẩu nấm hoặc lẩu chua cay.',
     },
   ]
 
@@ -183,7 +183,7 @@ async function seed() {
       date: new Date().toISOString(),
       displayName: product.name,
       isActive: true,
-      note: index === 0 ? 'Gia tot cho don dat truoc 10h' : 'Cap nhat moi ngay',
+      note: index === 0 ? 'Giá tốt cho đơn đặt trước 10h' : 'Cập nhật mỗi ngày',
       price: product.retailPrice,
       product: product.id,
       sortOrder: index * 10,
@@ -198,7 +198,6 @@ async function seed() {
     }
   }
 
-  // Use upsert for banners too to make seed idempotent (prevent duplicates on re-run)
   const bannerExisting = await payload.find({
     collection: 'banners',
     limit: 1,
@@ -211,13 +210,13 @@ async function seed() {
   const bannerData = {
     _status: 'published' as const,
     isActive: true,
-    linkLabel: 'Xem bang gia',
+    linkLabel: 'Xem bảng giá',
     linkUrl: '/bang-gia',
     placement: PLACEMENTS.HOME,
     sortOrder: 10,
     subtitle:
-      'Long Phung cap nhat san pham va bang gia moi ngay, uu tien dat nhanh qua Zalo hoac hotline.',
-    title: 'Hai san tuoi cho bua an gia dinh va bep nha hang',
+      'Long Phụng cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.',
+    title: 'Hải sản tươi cho bữa ăn gia đình và bếp nhà hàng',
   }
   if (bannerExisting.docs[0]) {
     await payload.update({
@@ -231,13 +230,13 @@ async function seed() {
 
   const posts = [
     {
-      title: 'Cach chon hai san tuoi cho bua an gia dinh',
-      excerpt: 'Nhung dau hieu don gian de nhan biet tom, cua, muc va ca con tuoi khi dat hang.',
+      title: 'Cách chọn hải sản tươi cho bữa ăn gia đình',
+      excerpt: 'Những dấu hiệu đơn giản để nhận biết tôm, cua, mực và cá còn tươi khi đặt hàng.',
       featured: true,
     },
     {
-      title: 'Bao quan sashimi tai nha nhu the nao',
-      excerpt: 'Cach giu lanh, thoi gian dung ngon va nhung luu y khi nhan hang sashimi.',
+      title: 'Bảo quản sashimi tại nhà như thế nào',
+      excerpt: 'Cách giữ lạnh, thời gian dùng ngon và những lưu ý khi nhận hàng sashimi.',
       featured: true,
     },
   ]

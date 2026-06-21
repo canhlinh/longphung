@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: post.seo?.title || `${post.title} | Long Phung Seafood`,
+    title: post.seo?.title || `${post.title} | Long Phụng Seafood`,
     description: post.seo?.description || post.excerpt,
   }
 }
@@ -50,19 +50,19 @@ export default async function PostPage({ params }: PageProps) {
     <>
       <article className="article-detail">
         <Image alt={post.title} src={getMediaUrl(post.coverImage, 1)} width={800} height={400} />
-        <p className="eyebrow">Cung vao bep</p>
+        <p className="eyebrow">Cùng vào bếp</p>
         <h1>{post.title}</h1>
         <p className="lead">{post.excerpt}</p>
         <div className="article-body">
           <p>
             {plainTextFromRichText(post.content) ||
-              'Admin co the cap nhat noi dung chi tiet, cong thuc va san pham lien quan trong Payload.'}
+              'Admin có thể cập nhật nội dung chi tiết, công thức và sản phẩm liên quan trong Payload.'}
           </p>
         </div>
       </article>
       {relatedProducts.length ? (
         <section className="page-section">
-          <SectionHeader title="San pham lien quan" />
+          <SectionHeader title="Sản phẩm liên quan" />
           <ProductGrid products={relatedProducts} settings={settings} />
         </section>
       ) : null}

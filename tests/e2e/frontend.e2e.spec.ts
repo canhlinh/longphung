@@ -4,11 +4,11 @@ test.describe('Frontend', () => {
   test('can go on homepage', async ({ page }) => {
     await page.goto('/')
 
-    await expect(page).toHaveTitle(/Long Phung Seafood/)
+    await expect(page).toHaveTitle(/Long Phụng Seafood/)
 
     const heading = page.locator('h1').first()
 
-    await expect(heading).toContainText('Hai san')
+    await expect(heading).toContainText('Hải sản')
   })
 
   test('shows 404 for unknown product', async ({ page }) => {
@@ -18,6 +18,6 @@ test.describe('Frontend', () => {
 
   test('can navigate to a category page', async ({ page }) => {
     await page.goto('/danh-muc/hai-san-tuoi')
-    await expect(page.locator('h1')).toContainText(/Hai san|San pham/i)
+    await expect(page.locator('h1')).toContainText(/Hải sản|Sản phẩm/i)
   })
 })

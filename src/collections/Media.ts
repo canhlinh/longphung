@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    singular: 'Hình ảnh',
+    plural: 'Hình ảnh',
+  },
   admin: {
     useAsTitle: 'alt',
   },
@@ -12,6 +16,7 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
+      label: 'Mô tả ảnh',
       required: true,
     },
   ],

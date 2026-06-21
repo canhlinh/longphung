@@ -6,8 +6,8 @@ import { AddressBlock, ContactBand } from '../components'
 import { getSettings } from '@/lib/storefront'
 
 export const metadata: Metadata = {
-  title: 'Lien he | Long Phung Seafood',
-  description: 'Lien he Long Phung Seafood de dat hai san, nhan bang gia si va bang gia moi ngay.',
+  title: 'Liên hệ | Long Phụng Seafood',
+  description: 'Liên hệ Long Phụng Seafood để đặt hải sản, nhận bảng giá sỉ và bảng giá mỗi ngày.',
 }
 
 export default async function ContactPage() {
@@ -16,9 +16,9 @@ export default async function ContactPage() {
   return (
     <>
       <section className="page-hero compact">
-        <p className="eyebrow">Lien he</p>
-        <h1>Dat hai san nhanh qua Zalo hoac hotline</h1>
-        <p>Gui danh sach san pham, so luong va thoi gian can nhan. Long Phung se phan hoi nhanh.</p>
+        <p className="eyebrow">Liên hệ</p>
+        <h1>Đặt hải sản nhanh qua Zalo hoặc hotline</h1>
+        <p>Gửi danh sách sản phẩm, số lượng và thời gian cần nhận. Long Phụng sẽ phản hồi nhanh.</p>
         <div className="hero-actions">
           <a className="button primary" href={(settings as any).zaloUrl}>
             <MessageCircle size={18} /> Chat Zalo
@@ -31,9 +31,9 @@ export default async function ContactPage() {
       <section className="page-section contact-layout">
         <AddressBlock settings={settings} />
         <div className="policy-panel">
-          <h2>Thong tin can gui khi dat hang</h2>
-          <p>Ten san pham, so luong, quy cach, dia chi giao va thoi gian mong muon.</p>
-          <p>Don si/nha hang co the gui danh sach nhieu mon de nhan bao gia rieng.</p>
+          <h2>Thông tin cần gửi khi đặt hàng</h2>
+          <p>Tên sản phẩm, số lượng, quy cách, địa chỉ giao và thời gian mong muốn.</p>
+          <p>Đơn sỉ/nhà hàng có thể gửi danh sách nhiều món để nhận báo giá riêng.</p>
         </div>
       </section>
       <ContactBand settings={settings} />
