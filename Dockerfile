@@ -68,6 +68,13 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# One-off maintenance commands (seed, import) inside the production container.
+COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+RUN npm install --no-save tsx@4.21.0 \
+  && chown -R nextjs:nodejs /app/node_modules /app/scripts /app/src
+
 USER nextjs
 
 EXPOSE 3000

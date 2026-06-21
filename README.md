@@ -44,6 +44,18 @@ http://localhost:3000/admin
 npm run seed
 ```
 
+In Docker/Kubernetes, use the **tooling image** (`:main-build`) or the compose seed profile — the slim runtime image does not ship `tsx` until rebuilt with the current Dockerfile:
+
+```bash
+# Local compose (builder stage, full dev deps)
+docker compose --profile seed run --rm seed
+
+# Production registry (one-off job / kubectl run)
+docker run --rm -e DATABASE_URL=... -e PAYLOAD_SECRET=... ghcr.io/canhlinh/longphung:main-build npm run seed
+```
+
+After rebuilding the runtime image, `npm run seed` also works via `kubectl exec` into the app pod.
+
 Default seed admin:
 
 ```text
