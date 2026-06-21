@@ -97,7 +97,7 @@ export default async function HomePage() {
           eyebrow="Bảng giá"
           title="Giá tốt đang có"
         />
-        <PriceTable prices={prices.slice(0, 6)} settings={settings} />
+        <PriceTable prices={prices.slice(0, 6)} settings={settings} hideWholesale />
       </section>
       <section className="page-section">
         <SectionHeader

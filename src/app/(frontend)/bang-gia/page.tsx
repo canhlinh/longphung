@@ -2,17 +2,43 @@ import type { Metadata } from 'next'
 import React from 'react'
 
 import { ContactBand, PriceTable, SectionHeader } from '../components'
-import { fallbackPrices, findDocs, getSettings } from '@/lib/storefront'
+import { fallbackPrices, getSettings, getPayloadClient } from '@/lib/storefront'
+import { SearchForm } from './SearchForm'
+import { Pagination } from './Pagination'
 
 export const metadata: Metadata = {
   title: 'Bảng giá hôm nay | Long Phụng Seafood',
   description: 'Bảng giá hải sản, sashimi và combo cập nhật mỗi ngày.',
 }
 
-export default async function PricePage() {
-  const [settings, prices] = await Promise.all([
+export default async function PricePage(props: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const searchParams = await props.searchParams
+  const page = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1
+  const search = typeof searchParams.q === 'string' ? searchParams.q : ''
+
+  const where: any = {
+    isActive: { equals: true },
+  }
+  if (search) {
+    where.displayName = {
+      like: search,
+    }
+  }
+
+  const payload = await getPayloadClient()
+  
+  const [settings, pricesResult] = await Promise.all([
     getSettings(),
-    findDocs('daily-prices', { limit: 100, sort: 'sortOrder' }, fallbackPrices),
+    payload.find({
+      collection: 'daily-prices',
+      limit: 20,
+      page,
+      sort: 'sortOrder',
+      where,
+      depth: 2,
+    }).catch(() => ({ docs: fallbackPrices, totalPages: 1, hasNextPage: false, hasPrevPage: false, page: 1 })),
   ])
 
   return (
@@ -24,7 +50,15 @@ export default async function PricePage() {
       </section>
       <section className="page-section">
         <SectionHeader title="Sản phẩm đang mở bán" eyebrow="Cập nhật mỗi ngày" />
-        <PriceTable prices={prices} settings={settings} />
+        <SearchForm initialSearch={search} />
+        <PriceTable prices={pricesResult.docs} settings={settings} hideWholesale />
+        <Pagination 
+          page={pricesResult.page} 
+          totalPages={pricesResult.totalPages} 
+          hasNextPage={pricesResult.hasNextPage} 
+          hasPrevPage={pricesResult.hasPrevPage} 
+          query={search}
+        />
       </section>
       <ContactBand settings={settings} />
     </>

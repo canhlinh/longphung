@@ -232,13 +232,13 @@ export function ProductCard({
   )
 }
 
-export function PriceTable({ prices, settings }: PropsWithSettings & { prices: any[] }) {
+export function PriceTable({ prices, settings, hideWholesale = false }: PropsWithSettings & { prices: any[], hideWholesale?: boolean }) {
   return (
-    <div className="price-table">
+    <div className={`price-table ${hideWholesale ? 'hide-wholesale' : ''}`}>
       <div className="price-row price-head">
         <span>Sản phẩm</span>
         <span>Giá lẻ</span>
-        <span>Giá sỉ</span>
+        {!hideWholesale && <span>Giá sỉ</span>}
         <span>Đặt hàng</span>
       </div>
       {prices.map((item) => {
@@ -255,7 +255,7 @@ export function PriceTable({ prices, settings }: PropsWithSettings & { prices: a
               </small>
             </span>
             <span>{formatPrice(item.price)}</span>
-            <span>{formatPrice(item.wholesalePrice)}</span>
+            {!hideWholesale && <span>{formatPrice(item.wholesalePrice)}</span>}
             <span className="row-actions">
               {product && <Link href={`/san-pham/${slug}`}>Chi tiết</Link>}
               <a href={createZaloUrl(settings.zaloUrl, message)}>Zalo</a>
