@@ -45,6 +45,7 @@ npm run seed
 ```
 
 In Docker/Kubernetes, run maintenance scripts from the Docker `tooling` target, not the slim app runtime image. The tooling target keeps the full dependency tree needed by Payload TS scripts.
+Do not run `npm run seed`, `npm run migrate:run`, or import scripts inside the app pod/image (`:main`); use `:main-tooling`.
 
 ```bash
 # Local compose (tooling stage, full deps)
