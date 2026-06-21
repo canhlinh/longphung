@@ -7,7 +7,7 @@ export default async function ThumbnailCell(props: any) {
 
   if (!cellData) return null
 
-  let src = ''
+  let src: string | null | undefined = ''
 
   if (typeof cellData === 'object' && cellData.url) {
     src = cellData.sizes?.thumbnail?.url || cellData.url
@@ -16,7 +16,7 @@ export default async function ThumbnailCell(props: any) {
       const payload = await getPayload({ config })
       const media = await payload.findByID({ collection: 'media', id: cellData })
       if (media) {
-         src = media.sizes?.thumbnail?.url || media.url
+        src = media.sizes?.thumbnail?.url || media.url;
       }
     } catch (e) {
       console.error(e)
