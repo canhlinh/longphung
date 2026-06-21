@@ -46,6 +46,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || '',
+      idleTimeoutMillis: process.env.CI || process.env.VERCEL ? 500 : 10000, 
     },
     prodMigrations: migrations,
   }),

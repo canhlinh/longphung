@@ -5,9 +5,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
    CREATE TYPE "public"."enum_users_role" AS ENUM('admin');
   CREATE TYPE "public"."enum_products_unit" AS ENUM('kg', 'con', 'thung', 'hop', 'set');
   CREATE TYPE "public"."enum_products_stock_status" AS ENUM('in_stock', 'preorder', 'out_of_stock');
+  CREATE TYPE "public"."enum_products_price_direction" AS ENUM('none', 'up', 'down');
   CREATE TYPE "public"."enum_products_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__products_v_version_unit" AS ENUM('kg', 'con', 'thung', 'hop', 'set');
   CREATE TYPE "public"."enum__products_v_version_stock_status" AS ENUM('in_stock', 'preorder', 'out_of_stock');
+  CREATE TYPE "public"."enum__products_v_version_price_direction" AS ENUM('none', 'up', 'down');
   CREATE TYPE "public"."enum__products_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_daily_prices_unit" AS ENUM('kg', 'con', 'thung', 'hop', 'set');
   CREATE TYPE "public"."enum_banners_placement" AS ENUM('home');
@@ -53,18 +55,18 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"height" numeric,
   	"focal_x" numeric,
   	"focal_y" numeric,
-  	"sizes_card_url" varchar,
-  	"sizes_card_width" numeric,
-  	"sizes_card_height" numeric,
-  	"sizes_card_mime_type" varchar,
-  	"sizes_card_filesize" numeric,
-  	"sizes_card_filename" varchar,
-  	"sizes_hero_url" varchar,
-  	"sizes_hero_width" numeric,
-  	"sizes_hero_height" numeric,
-  	"sizes_hero_mime_type" varchar,
-  	"sizes_hero_filesize" numeric,
-  	"sizes_hero_filename" varchar
+  	"sizes_thumbnail_url" varchar,
+  	"sizes_thumbnail_width" numeric,
+  	"sizes_thumbnail_height" numeric,
+  	"sizes_thumbnail_mime_type" varchar,
+  	"sizes_thumbnail_filesize" numeric,
+  	"sizes_thumbnail_filename" varchar,
+  	"sizes_preview_url" varchar,
+  	"sizes_preview_width" numeric,
+  	"sizes_preview_height" numeric,
+  	"sizes_preview_mime_type" varchar,
+  	"sizes_preview_filesize" numeric,
+  	"sizes_preview_filename" varchar
   );
   
   CREATE TABLE "categories" (
@@ -72,6 +74,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"name" varchar NOT NULL,
   	"slug" varchar NOT NULL,
   	"description" varchar,
+  	"icon" varchar,
+  	"color" varchar,
+  	"source_group_id" numeric,
   	"image_id" integer,
   	"featured" boolean DEFAULT false,
   	"sort_order" numeric DEFAULT 0,
@@ -88,6 +93,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "products" (
   	"id" serial PRIMARY KEY NOT NULL,
+  	"featured_image_id" integer,
   	"name" varchar,
   	"slug" varchar,
   	"category_id" integer,
@@ -101,6 +107,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"featured" boolean DEFAULT false,
   	"best_seller" boolean DEFAULT false,
   	"short_description" varchar,
+  	"source_image_url" varchar,
+  	"external_key" varchar,
+  	"is_new_listing" boolean DEFAULT false,
+  	"price_direction" "enum_products_price_direction" DEFAULT 'none',
   	"description" jsonb,
   	"preservation_notes" varchar,
   	"cooking_notes" varchar,
@@ -122,6 +132,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE "_products_v" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"parent_id" integer,
+  	"version_featured_image_id" integer,
   	"version_name" varchar,
   	"version_slug" varchar,
   	"version_category_id" integer,
@@ -135,6 +146,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"version_featured" boolean DEFAULT false,
   	"version_best_seller" boolean DEFAULT false,
   	"version_short_description" varchar,
+  	"version_source_image_url" varchar,
+  	"version_external_key" varchar,
+  	"version_is_new_listing" boolean DEFAULT false,
+  	"version_price_direction" "enum__products_v_version_price_direction" DEFAULT 'none',
   	"version_description" jsonb,
   	"version_preservation_notes" varchar,
   	"version_cooking_notes" varchar,
@@ -148,12 +163,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"latest" boolean
   );
   
+  CREATE TABLE "daily_prices_price_tiers" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"price" numeric NOT NULL,
+  	"pco" numeric
+  );
+  
   CREATE TABLE "daily_prices" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"date" timestamp(3) with time zone NOT NULL,
   	"product_id" integer,
   	"display_name" varchar NOT NULL,
   	"unit" "enum_daily_prices_unit" DEFAULT 'kg' NOT NULL,
+  	"display_unit" varchar,
+  	"external_key" varchar,
   	"price" numeric NOT NULL,
   	"wholesale_price" numeric,
   	"note" varchar,
@@ -247,6 +273,26 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"products_id" integer
   );
   
+  CREATE TABLE "wholesale_customers" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"name" varchar NOT NULL,
+  	"slug" varchar,
+  	"order_link" varchar,
+  	"contact_person" varchar,
+  	"phone" varchar,
+  	"greeting" varchar,
+  	"tier_name" varchar,
+  	"store_display_name" varchar,
+  	"sale_name" varchar,
+  	"sale_phone" varchar,
+  	"boss_name" varchar,
+  	"boss_phone" varchar,
+  	"promo_text" varchar,
+  	"is_active" boolean DEFAULT true,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
   CREATE TABLE "payload_kv" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar NOT NULL,
@@ -271,7 +317,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"products_id" integer,
   	"daily_prices_id" integer,
   	"banners_id" integer,
-  	"posts_id" integer
+  	"posts_id" integer,
+  	"wholesale_customers_id" integer
   );
   
   CREATE TABLE "payload_preferences" (
@@ -300,16 +347,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "site_settings" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"brand_name" varchar DEFAULT 'Long Phung Seafood' NOT NULL,
-  	"tagline" varchar DEFAULT 'Hai san tuoi moi ngay cho gia dinh va nha hang',
+  	"brand_name" varchar DEFAULT 'Hải Sản Long Phụng' NOT NULL,
+  	"tagline" varchar DEFAULT 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
   	"hotline" varchar DEFAULT '0900 000 000' NOT NULL,
   	"zalo_url" varchar DEFAULT 'https://zalo.me/0900000000' NOT NULL,
-  	"address" varchar DEFAULT 'Cap nhat dia chi cua Long Phung',
+  	"address" varchar DEFAULT 'Cập nhật địa chỉ của Long Phụng',
   	"email" varchar,
   	"facebook_url" varchar,
-  	"business_hours" varchar DEFAULT '06:00 - 20:00 hang ngay',
-  	"seo_title" varchar DEFAULT 'Long Phung Seafood',
-  	"seo_description" varchar DEFAULT 'Hai san tuoi song, sashimi, combo gia dinh va bang gia moi ngay.',
+  	"business_hours" varchar DEFAULT '06:00 - 20:00 hằng ngày',
+  	"seo_title" varchar DEFAULT 'Hải Sản Long Phụng',
+  	"seo_description" varchar DEFAULT 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
   );
@@ -318,11 +365,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "categories" ADD CONSTRAINT "categories_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "products_images" ADD CONSTRAINT "products_images_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "products_images" ADD CONSTRAINT "products_images_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."products"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "products" ADD CONSTRAINT "products_featured_image_id_media_id_fk" FOREIGN KEY ("featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "products" ADD CONSTRAINT "products_category_id_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_products_v_version_images" ADD CONSTRAINT "_products_v_version_images_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_products_v_version_images" ADD CONSTRAINT "_products_v_version_images_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_products_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_products_v" ADD CONSTRAINT "_products_v_parent_id_products_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."products"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_products_v" ADD CONSTRAINT "_products_v_version_featured_image_id_media_id_fk" FOREIGN KEY ("version_featured_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_products_v" ADD CONSTRAINT "_products_v_version_category_id_categories_id_fk" FOREIGN KEY ("version_category_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "daily_prices_price_tiers" ADD CONSTRAINT "daily_prices_price_tiers_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."daily_prices"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "daily_prices" ADD CONSTRAINT "daily_prices_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "banners" ADD CONSTRAINT "banners_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_banners_v" ADD CONSTRAINT "_banners_v_parent_id_banners_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."banners"("id") ON DELETE set null ON UPDATE no action;
@@ -342,6 +392,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_daily_prices_fk" FOREIGN KEY ("daily_prices_id") REFERENCES "public"."daily_prices"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_banners_fk" FOREIGN KEY ("banners_id") REFERENCES "public"."banners"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_wholesale_customers_fk" FOREIGN KEY ("wholesale_customers_id") REFERENCES "public"."wholesale_customers"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
@@ -352,8 +403,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "media_updated_at_idx" ON "media" USING btree ("updated_at");
   CREATE INDEX "media_created_at_idx" ON "media" USING btree ("created_at");
   CREATE UNIQUE INDEX "media_filename_idx" ON "media" USING btree ("filename");
-  CREATE INDEX "media_sizes_card_sizes_card_filename_idx" ON "media" USING btree ("sizes_card_filename");
-  CREATE INDEX "media_sizes_hero_sizes_hero_filename_idx" ON "media" USING btree ("sizes_hero_filename");
+  CREATE INDEX "media_sizes_thumbnail_sizes_thumbnail_filename_idx" ON "media" USING btree ("sizes_thumbnail_filename");
+  CREATE INDEX "media_sizes_preview_sizes_preview_filename_idx" ON "media" USING btree ("sizes_preview_filename");
   CREATE UNIQUE INDEX "categories_slug_idx" ON "categories" USING btree ("slug");
   CREATE INDEX "categories_image_idx" ON "categories" USING btree ("image_id");
   CREATE INDEX "categories_updated_at_idx" ON "categories" USING btree ("updated_at");
@@ -361,6 +412,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "products_images_order_idx" ON "products_images" USING btree ("_order");
   CREATE INDEX "products_images_parent_id_idx" ON "products_images" USING btree ("_parent_id");
   CREATE INDEX "products_images_image_idx" ON "products_images" USING btree ("image_id");
+  CREATE INDEX "products_featured_image_idx" ON "products" USING btree ("featured_image_id");
   CREATE UNIQUE INDEX "products_slug_idx" ON "products" USING btree ("slug");
   CREATE INDEX "products_category_idx" ON "products" USING btree ("category_id");
   CREATE INDEX "products_updated_at_idx" ON "products" USING btree ("updated_at");
@@ -370,6 +422,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_products_v_version_images_parent_id_idx" ON "_products_v_version_images" USING btree ("_parent_id");
   CREATE INDEX "_products_v_version_images_image_idx" ON "_products_v_version_images" USING btree ("image_id");
   CREATE INDEX "_products_v_parent_idx" ON "_products_v" USING btree ("parent_id");
+  CREATE INDEX "_products_v_version_version_featured_image_idx" ON "_products_v" USING btree ("version_featured_image_id");
   CREATE INDEX "_products_v_version_version_slug_idx" ON "_products_v" USING btree ("version_slug");
   CREATE INDEX "_products_v_version_version_category_idx" ON "_products_v" USING btree ("version_category_id");
   CREATE INDEX "_products_v_version_version_updated_at_idx" ON "_products_v" USING btree ("version_updated_at");
@@ -378,6 +431,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_products_v_created_at_idx" ON "_products_v" USING btree ("created_at");
   CREATE INDEX "_products_v_updated_at_idx" ON "_products_v" USING btree ("updated_at");
   CREATE INDEX "_products_v_latest_idx" ON "_products_v" USING btree ("latest");
+  CREATE INDEX "daily_prices_price_tiers_order_idx" ON "daily_prices_price_tiers" USING btree ("_order");
+  CREATE INDEX "daily_prices_price_tiers_parent_id_idx" ON "daily_prices_price_tiers" USING btree ("_parent_id");
   CREATE INDEX "daily_prices_product_idx" ON "daily_prices" USING btree ("product_id");
   CREATE INDEX "daily_prices_updated_at_idx" ON "daily_prices" USING btree ("updated_at");
   CREATE INDEX "daily_prices_created_at_idx" ON "daily_prices" USING btree ("created_at");
@@ -415,6 +470,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_posts_v_rels_parent_idx" ON "_posts_v_rels" USING btree ("parent_id");
   CREATE INDEX "_posts_v_rels_path_idx" ON "_posts_v_rels" USING btree ("path");
   CREATE INDEX "_posts_v_rels_products_id_idx" ON "_posts_v_rels" USING btree ("products_id");
+  CREATE UNIQUE INDEX "wholesale_customers_slug_idx" ON "wholesale_customers" USING btree ("slug");
+  CREATE INDEX "wholesale_customers_updated_at_idx" ON "wholesale_customers" USING btree ("updated_at");
+  CREATE INDEX "wholesale_customers_created_at_idx" ON "wholesale_customers" USING btree ("created_at");
   CREATE UNIQUE INDEX "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
   CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
@@ -429,6 +487,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_locked_documents_rels_daily_prices_id_idx" ON "payload_locked_documents_rels" USING btree ("daily_prices_id");
   CREATE INDEX "payload_locked_documents_rels_banners_id_idx" ON "payload_locked_documents_rels" USING btree ("banners_id");
   CREATE INDEX "payload_locked_documents_rels_posts_id_idx" ON "payload_locked_documents_rels" USING btree ("posts_id");
+  CREATE INDEX "payload_locked_documents_rels_wholesale_customers_id_idx" ON "payload_locked_documents_rels" USING btree ("wholesale_customers_id");
   CREATE INDEX "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
   CREATE INDEX "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
   CREATE INDEX "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
@@ -450,6 +509,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "products" CASCADE;
   DROP TABLE "_products_v_version_images" CASCADE;
   DROP TABLE "_products_v" CASCADE;
+  DROP TABLE "daily_prices_price_tiers" CASCADE;
   DROP TABLE "daily_prices" CASCADE;
   DROP TABLE "banners" CASCADE;
   DROP TABLE "_banners_v" CASCADE;
@@ -457,6 +517,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "posts_rels" CASCADE;
   DROP TABLE "_posts_v" CASCADE;
   DROP TABLE "_posts_v_rels" CASCADE;
+  DROP TABLE "wholesale_customers" CASCADE;
   DROP TABLE "payload_kv" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
@@ -467,9 +528,11 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_users_role";
   DROP TYPE "public"."enum_products_unit";
   DROP TYPE "public"."enum_products_stock_status";
+  DROP TYPE "public"."enum_products_price_direction";
   DROP TYPE "public"."enum_products_status";
   DROP TYPE "public"."enum__products_v_version_unit";
   DROP TYPE "public"."enum__products_v_version_stock_status";
+  DROP TYPE "public"."enum__products_v_version_price_direction";
   DROP TYPE "public"."enum__products_v_version_status";
   DROP TYPE "public"."enum_daily_prices_unit";
   DROP TYPE "public"."enum_banners_placement";
