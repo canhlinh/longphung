@@ -53,10 +53,10 @@ export default async function PricePage(props: {
         <SearchForm initialSearch={search} />
         <PriceTable prices={pricesResult.docs} settings={settings} hideWholesale />
         <Pagination 
-          page={pricesResult.page} 
-          totalPages={pricesResult.totalPages} 
-          hasNextPage={pricesResult.hasNextPage} 
-          hasPrevPage={pricesResult.hasPrevPage} 
+          page={pricesResult.page || 1} 
+          totalPages={pricesResult.totalPages || 1} 
+          hasNextPage={pricesResult.hasNextPage || false} 
+          hasPrevPage={pricesResult.hasPrevPage || false} 
           query={search}
         />
       </section>

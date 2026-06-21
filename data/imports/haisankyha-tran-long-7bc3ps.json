@@ -404,7 +404,7 @@
           "unit": "1Kg",
           "price": 201600,
           "pco": 192000,
-          "on_hand": 71.5,
+          "on_hand": 70.5,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -421,7 +421,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1782020860469
+      "stockTs": 1782049660354
     },
     {
       "key": "1::Tôm Hùm Bông 500gr Up",
@@ -2646,7 +2646,7 @@
           "unit": "1Kg",
           "price": 225000,
           "pco": 225000,
-          "on_hand": 52,
+          "on_hand": 50,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -2663,7 +2663,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1781747181655
+      "stockTs": 1782049660354
     },
     {
       "key": "4::Cồi Điệp Hấp Special Size 100-120 ( Núi Phú Sỹ)",
@@ -3021,7 +3021,7 @@
           "unit": "1Kg",
           "price": 147000,
           "pco": 140000,
-          "on_hand": 29,
+          "on_hand": 27,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -3038,7 +3038,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1782020860469
+      "stockTs": 1782049660354
     },
     {
       "key": "5::Rong Biển Trộn Mè Nissi Hộp 500gr",
@@ -3344,7 +3344,7 @@
           "unit": "",
           "price": 115500,
           "pco": 110000,
-          "on_hand": 19.28,
+          "on_hand": 18.28,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -3361,7 +3361,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1781776031016
+      "stockTs": 1782049660354
     },
     {
       "key": "5::Trứng Cá Ngừ Đại Dương Size Nhỏ",
@@ -5833,7 +5833,7 @@
           "unit": "Túi 1Kg",
           "price": 66000,
           "pco": 66000,
-          "on_hand": 37,
+          "on_hand": 34,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -5850,7 +5850,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1781934459419
+      "stockTs": 1782049660354
     },
     {
       "key": "7::Khoai Tây Bỉ 7/7",
@@ -5949,7 +5949,7 @@
           "unit": "",
           "price": 354900,
           "pco": 338000,
-          "on_hand": 9.5,
+          "on_hand": 8.5,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -5964,7 +5964,9 @@
           ]
         }
       ],
-      "vat": true
+      "vat": true,
+      "recentStock": true,
+      "stockTs": 1782049660354
     },
     {
       "key": "7::Lươn Nhật Nướng Sốt Kabayyaki Nissi (Sashimi)",
@@ -6007,7 +6009,7 @@
           "unit": "1Kg",
           "price": 395000,
           "pco": 395000,
-          "on_hand": 26.6,
+          "on_hand": 26.2,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -6024,7 +6026,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1781948859890
+      "stockTs": 1782049660354
     },
     {
       "key": "7::Lườn Cá Hồi",
@@ -6417,7 +6419,7 @@
           "unit": "Kg",
           "price": 57000,
           "pco": 57000,
-          "on_hand": 34,
+          "on_hand": 32.5,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -6433,7 +6435,7 @@
         }
       ],
       "recentStock": true,
-      "stockTs": 1782035260266
+      "stockTs": 1782049660354
     },
     {
       "key": "7::Saku Cá Ngừ Chuẩn Sashimi",
@@ -6736,7 +6738,7 @@
           "unit": "KG",
           "price": 68000,
           "pco": 68000,
-          "on_hand": 10,
+          "on_hand": 9.5,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -6752,7 +6754,7 @@
         }
       ],
       "recentStock": true,
-      "stockTs": 1782020860469
+      "stockTs": 1782049660354
     },
     {
       "key": "9::Bánh Tuyết Thiên Sứ Trà Xanh Đậu Đỏ",
@@ -7467,7 +7469,7 @@
           "unit": "",
           "price": 241500,
           "pco": 230000,
-          "on_hand": 118,
+          "on_hand": 116,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -7484,7 +7486,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1781948859890
+      "stockTs": 1782049660354
     },
     {
       "key": "12::Điệp nửa mảnh Nissi 10-12 con net 8",
@@ -7613,7 +7615,7 @@
           "unit": "kg",
           "price": 172000,
           "pco": 172000,
-          "on_hand": 196,
+          "on_hand": 190,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -7632,7 +7634,7 @@
       "dir": "down",
       "priceTs": 1781761591000,
       "recentStock": true,
-      "stockTs": 1782020860469
+      "stockTs": 1782049660354
     },
     {
       "key": "13::Bào ngư Tiger Úc size 9-10 con/kg net đủ",
@@ -8129,7 +8131,7 @@
           "unit": "kg",
           "price": 187000,
           "pco": 178095,
-          "on_hand": 69,
+          "on_hand": 64,
           "prices": [
             {
               "name": "Sỉ Thùng (10Kg)",
@@ -8146,7 +8148,7 @@
       ],
       "vat": true,
       "recentStock": true,
-      "stockTs": 1781862458987
+      "stockTs": 1782049660354
     },
     {
       "key": "13::Khoai Tây Răng Cưa Mccain",
