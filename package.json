@@ -11,6 +11,7 @@
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "clear-warning": "tsx scripts/clear-dev-warning.ts",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:status",
     "migrate:run": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
