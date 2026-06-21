@@ -1,6 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { migrations } from './migrations'
 import { vi } from '@payloadcms/translations/languages/vi'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -46,6 +47,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || '',
     },
+    prodMigrations: migrations,
   }),
   // Basic startup validation to catch missing required envs early (Issue 21)
   onInit: async (payload) => {
