@@ -7,14 +7,14 @@ import { STOCK_LABELS, STOCK_STATUS } from '@/lib/labels'
 type AnyDoc = Record<string, unknown>
 
 export const fallbackSettings: Record<string, unknown> = {
-  brandName: 'Hải Sản Long Phụng',
+  brandName: 'Hải Sản Minh Kiên',
   tagline: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
   hotline: '0900 000 000',
   zaloUrl: 'https://zalo.me/0900000000',
-  address: 'Cập nhật địa chỉ của Long Phụng',
+  address: 'Cập nhật địa chỉ của Minh Kiên',
   businessHours: '06:00 - 20:00 hằng ngày',
   seo: {
-    title: 'Long Phụng Seafood',
+    title: 'Minh Kiên Seafood',
     description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
   },
 }
@@ -87,7 +87,7 @@ export const fallbackProducts: any[] = [
     unit: 'set',
     retailPrice: 499000,
     stockStatus: 'in_stock',
-    origin: 'Long Phụng',
+    origin: 'Minh Kiên',
     size: '3-4 người',
     featured: true,
     bestSeller: false,

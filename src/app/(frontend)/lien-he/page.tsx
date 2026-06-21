@@ -6,8 +6,8 @@ import { AddressBlock, ContactBand } from '../components'
 import { getSettings } from '@/lib/storefront'
 
 export const metadata: Metadata = {
-  title: 'Liên hệ | Long Phụng Seafood',
-  description: 'Liên hệ Long Phụng Seafood để đặt hải sản, nhận bảng giá sỉ và bảng giá mỗi ngày.',
+  title: 'Liên hệ | Minh Kiên Seafood',
+  description: 'Liên hệ Minh Kiên Seafood để đặt hải sản, nhận bảng giá sỉ và bảng giá mỗi ngày.',
 }
 
 export default async function ContactPage() {
@@ -18,7 +18,7 @@ export default async function ContactPage() {
       <section className="page-hero compact">
         <p className="eyebrow">Liên hệ</p>
         <h1>Đặt hải sản nhanh qua Zalo hoặc hotline</h1>
-        <p>Gửi danh sách sản phẩm, số lượng và thời gian cần nhận. Long Phụng sẽ phản hồi nhanh.</p>
+        <p>Gửi danh sách sản phẩm, số lượng và thời gian cần nhận. Minh Kiên sẽ phản hồi nhanh.</p>
         <div className="hero-actions">
           <a className="button primary" href={(settings as any).zaloUrl}>
             <MessageCircle size={18} /> Chat Zalo

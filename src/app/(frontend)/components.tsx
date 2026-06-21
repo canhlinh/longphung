@@ -100,7 +100,7 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
   return (
     <section className="hero">
       <Image
-        alt={banner?.title || 'Hải sản Long Phụng'}
+        alt={banner?.title || 'Hải sản Minh Kiên'}
         className="hero-image"
         src={imageUrl}
         fill
@@ -112,7 +112,7 @@ export function Hero({ banner, settings }: PropsWithSettings & { banner?: any })
         <h1>{banner?.title || 'Hải sản tươi cho bữa ăn gia đình và bếp nhà hàng'}</h1>
         <p>
           {banner?.subtitle ||
-            'Long Phụng cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.'}
+            'Minh Kiên cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.'}
         </p>
         <div className="hero-actions">
           <a className="button primary" href={settings.zaloUrl}>
@@ -297,7 +297,7 @@ export function ContactBand({ settings }: PropsWithSettings) {
     <section className="contact-band">
       <div>
         <p className="eyebrow">Cần báo giá nhanh?</p>
-        <h2>Gửi danh sách món qua Zalo, Long Phụng sẽ phản hồi trong ngày.</h2>
+        <h2>Gửi danh sách món qua Zalo, Minh Kiên sẽ phản hồi trong ngày.</h2>
       </div>
       <div className="contact-actions">
         <a className="button primary" href={settings.zaloUrl}>

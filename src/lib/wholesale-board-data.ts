@@ -254,11 +254,11 @@ export function buildWholesaleBoardData({
   return {
     meta: {
       store_name:
-        asString(settings.brandName) || asString(customer.storeDisplayName) || 'Hải Sản Long Phụng',
+        asString(settings.brandName) || asString(customer.storeDisplayName) || 'Hải Sản Minh Kiên',
       tier_name: asString(customer.tierName) || 'Khách sỉ',
       customer_name: asString(customer.contactPerson) || asString(customer.name),
       customer_phone: asString(customer.phone) || undefined,
-      sale_name: asString(customer.saleName) || asString(settings.brandName) || 'Hải Sản Long Phụng',
+      sale_name: asString(customer.saleName) || asString(settings.brandName) || 'Hải Sản Minh Kiên',
       sale_phone: asString(customer.salePhone) || asString(settings.hotline),
       boss_name: asString(customer.bossName) || undefined,
       boss_phone: asString(customer.bossPhone) || undefined,

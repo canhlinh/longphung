@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!customer || customer.slug !== slug || customer.isActive === false) {
     return {
-      title: 'Không tìm thấy bảng giá | Long Phụng Seafood',
+      title: 'Không tìm thấy bảng giá | Minh Kiên Seafood',
     }
   }
 

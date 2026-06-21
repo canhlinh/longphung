@@ -7,7 +7,7 @@ import { SearchForm } from './SearchForm'
 import { Pagination } from './Pagination'
 
 export const metadata: Metadata = {
-  title: 'Bảng giá hôm nay | Long Phụng Seafood',
+  title: 'Bảng giá hôm nay | Minh Kiên Seafood',
   description: 'Bảng giá hải sản, sashimi và combo cập nhật mỗi ngày.',
 }
 

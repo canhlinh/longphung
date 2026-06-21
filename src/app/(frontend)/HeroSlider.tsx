@@ -48,7 +48,7 @@ export function HeroSlider({ banners, settings }: HeroSliderProps) {
     <section className="hero">
       <Image
         key={imageUrl} // Forces re-render/animation on image change if needed
-        alt={banner?.title || 'Hải sản Long Phụng'}
+        alt={banner?.title || 'Hải sản Minh Kiên'}
         className="hero-image animate-fade-in"
         src={imageUrl}
         fill
@@ -60,7 +60,7 @@ export function HeroSlider({ banners, settings }: HeroSliderProps) {
         <h1>{banner?.title || 'Hải sản tươi cho bữa ăn gia đình và bếp nhà hàng'}</h1>
         <p>
           {banner?.subtitle ||
-            'Long Phụng cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.'}
+            'Minh Kiên cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.'}
         </p>
         <div className="hero-actions">
           <a className="button primary" href={settings.zaloUrl}>

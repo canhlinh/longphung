@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = product.seo?.description || product.shortDescription
 
   return {
-    title: product.seo?.title || `${product.name} | Long Phụng Seafood`,
+    title: product.seo?.title || `${product.name} | Minh Kiên Seafood`,
     description,
   }
 }
@@ -123,7 +123,7 @@ export default async function ProductPage({ params }: PageProps) {
         <article>
           <SectionHeader title="Bảo quản và chế biến" />
           <p>{product.preservationNotes || 'Giữ lạnh và dùng sớm sau khi nhận hàng.'}</p>
-          <p>{product.cookingNotes || 'Liên hệ Long Phụng để được gợi ý cách chế biến phù hợp.'}</p>
+          <p>{product.cookingNotes || 'Liên hệ Minh Kiên để được gợi ý cách chế biến phù hợp.'}</p>
         </article>
       </section>
       <section className="page-section">

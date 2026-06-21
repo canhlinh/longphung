@@ -30,7 +30,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      titleSuffix: '— Long Phụng',
+      titleSuffix: '— Minh Kiên',
     },
   },
   i18n: {

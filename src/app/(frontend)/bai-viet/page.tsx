@@ -5,7 +5,7 @@ import { PostGrid, SearchEmpty, SectionHeader } from '../components'
 import { fallbackPosts, findDocs } from '@/lib/storefront'
 
 export const metadata: Metadata = {
-  title: 'Món ngon và mẹo chọn hải sản | Long Phụng Seafood',
+  title: 'Món ngon và mẹo chọn hải sản | Minh Kiên Seafood',
   description: 'Bài viết hướng dẫn chọn, bảo quản và chế biến hải sản.',
 }
 

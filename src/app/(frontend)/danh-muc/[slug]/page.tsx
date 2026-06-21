@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${category.name} | Long Phụng Seafood`,
-    description: category.description || 'Danh mục sản phẩm hải sản Long Phụng.',
+    title: `${category.name} | Minh Kiên Seafood`,
+    description: category.description || 'Danh mục sản phẩm hải sản Minh Kiên.',
   }
 }
 
@@ -76,7 +76,7 @@ export default async function CategoryPage({ params }: PageProps) {
     <>
       <section className="page-hero compact">
         <p className="eyebrow">Danh mục</p>
-        <h1>{category?.name || 'Sản phẩm Long Phụng'}</h1>
+        <h1>{category?.name || 'Sản phẩm Minh Kiên'}</h1>
         <p>{category?.description || 'Các sản phẩm đang được cập nhật trong Payload admin.'}</p>
       </section>
       <section className="page-section">

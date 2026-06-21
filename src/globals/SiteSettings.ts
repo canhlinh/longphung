@@ -14,7 +14,7 @@ export const SiteSettings: GlobalConfig = {
       name: 'brandName',
       type: 'text',
       label: 'Tên thương hiệu',
-      defaultValue: 'Hải Sản Long Phụng',
+      defaultValue: 'Hải Sản Minh Kiên',
       required: true,
     },
     {
@@ -41,7 +41,7 @@ export const SiteSettings: GlobalConfig = {
       name: 'address',
       type: 'textarea',
       label: 'Địa chỉ',
-      defaultValue: 'Cập nhật địa chỉ của Long Phụng',
+      defaultValue: 'Cập nhật địa chỉ của Minh Kiên',
     },
     {
       name: 'email',
@@ -68,7 +68,7 @@ export const SiteSettings: GlobalConfig = {
           name: 'title',
           type: 'text',
           label: 'Tiêu đề SEO',
-          defaultValue: 'Hải Sản Long Phụng',
+          defaultValue: 'Hải Sản Minh Kiên',
         },
         {
           name: 'description',

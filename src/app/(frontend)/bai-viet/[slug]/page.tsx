@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: post.seo?.title || `${post.title} | Long Phụng Seafood`,
+    title: post.seo?.title || `${post.title} | Minh Kiên Seafood`,
     description: post.seo?.description || post.excerpt,
   }
 }

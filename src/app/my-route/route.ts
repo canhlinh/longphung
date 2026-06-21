@@ -1,5 +1,5 @@
 export const GET = async () => {
   return Response.json({
-    message: 'Long Phung custom API route is ready.',
+    message: 'Minh Kien custom API route is ready.',
   })
 }

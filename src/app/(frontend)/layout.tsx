@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
-  title: 'Long Phụng Seafood',
+  title: 'Minh Kiên Seafood',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
