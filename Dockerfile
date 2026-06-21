@@ -73,8 +73,12 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
-RUN npm install --no-save tsx@4.21.0 \
-  && chown -R nextjs:nodejs /app/node_modules /app/scripts /app/src
+COPY --from=builder /app/node_modules/tsx ./node_modules/tsx
+COPY --from=builder /app/node_modules/esbuild ./node_modules/esbuild
+COPY --from=builder /app/node_modules/@esbuild ./node_modules/@esbuild
+COPY --from=builder /app/node_modules/get-tsconfig ./node_modules/get-tsconfig
+COPY --from=builder /app/node_modules/resolve-pkg-maps ./node_modules/resolve-pkg-maps
+RUN chown -R nextjs:nodejs /app/node_modules /app/scripts /app/src
 
 USER nextjs
 
