@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { admins, authenticated, publishedOrAdmin } from '@/access/admins'
+import { admins, authenticatedField, publishedOrAdmin } from '@/access/admins'
 import { STOCK_OPTIONS, UNIT_OPTIONS } from '@/lib/constants'
 import { slugify } from '@/lib/slugify'
 
@@ -113,7 +113,7 @@ export const Products: CollectionConfig = {
       label: 'Giá sỉ',
       min: 0,
       access: {
-        read: authenticated,
+        read: authenticatedField,
       },
     },
     {

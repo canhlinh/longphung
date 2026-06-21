@@ -1,4 +1,4 @@
-import type { Access } from 'payload'
+import type { Access, FieldAccess } from 'payload'
 
 type AdminUser = { role?: string } | null | undefined
 
@@ -8,6 +8,8 @@ export const admins: Access = ({ req: { user } }) => {
 }
 
 export const authenticated: Access = ({ req: { user } }) => Boolean(user)
+
+export const authenticatedField: FieldAccess = ({ req: { user } }) => Boolean(user)
 
 export const anyone: Access = () => true
 
