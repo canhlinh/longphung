@@ -201,7 +201,7 @@ async function seed() {
     {
       categorySlug: 'sashimi',
       name: 'Cá trích ép trứng',
-      unit: 'hộp',
+      unit: 'hop',
       retailPrice: 145000,
       wholesalePrice: 128000,
       stockStatus: 'in_stock',
@@ -330,7 +330,14 @@ async function seed() {
 
   for (const product of products) {
     const slug = slugify(product.name)
-    const category = categories.get(product.categorySlug)
+    const categorySlug = slugify(product.categorySlug)
+    let category = categories.get(categorySlug)
+    if (!category && categorySlug === 'sashimi') {
+      category = categories.get('sashimi-ca')
+    }
+    if (!category) {
+      throw new Error(`Category not found for slug: ${product.categorySlug} (slugified: ${categorySlug})`)
+    }
     const doc = await upsertBySlug(payload, 'products', slug, {
       ...product,
       _status: 'published',

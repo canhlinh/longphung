@@ -66,11 +66,30 @@ export const DailyPrices: CollectionConfig = {
     },
     {
       name: 'priceTiers',
-      type: 'json',
+      type: 'array',
       label: 'Bậc giá',
       admin: {
         description: 'Danh sách bậc giá sỉ/lẻ theo quy cách.',
       },
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          label: 'Tên bậc',
+          required: true,
+        },
+        {
+          name: 'price',
+          type: 'number',
+          label: 'Giá lẻ',
+          required: true,
+        },
+        {
+          name: 'pco',
+          type: 'number',
+          label: 'Giá sỉ (pco)',
+        },
+      ],
     },
     {
       name: 'externalKey',

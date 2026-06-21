@@ -306,12 +306,11 @@ export interface DailyPrice {
    */
   priceTiers?:
     | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
+        name: string;
+        price: number;
+        pco?: number | null;
+        id?: string | null;
+      }[]
     | null;
   externalKey?: string | null;
   price: number;
@@ -641,7 +640,14 @@ export interface DailyPricesSelect<T extends boolean = true> {
   displayName?: T;
   unit?: T;
   displayUnit?: T;
-  priceTiers?: T;
+  priceTiers?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        pco?: T;
+        id?: T;
+      };
   externalKey?: T;
   price?: T;
   wholesalePrice?: T;
