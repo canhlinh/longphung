@@ -3,12 +3,12 @@ import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { getS3ImageRemotePattern } from './src/lib/storage'
+import { getStorageImageRemotePatterns } from './src/lib/storage'
 
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
-const s3ImagePattern = getS3ImageRemotePattern()
+const storageImagePatterns = getStorageImageRemotePatterns()
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
-      ...(s3ImagePattern ? [s3ImagePattern] : []),
+      ...storageImagePatterns,
       {
         protocol: 'https',
         hostname: 'nv.haisankyha.vn',
