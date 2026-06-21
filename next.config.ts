@@ -3,10 +3,15 @@ import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { getS3ImageRemotePattern } from './src/lib/storage'
+
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
+const s3ImagePattern = getS3ImageRemotePattern()
+
 const nextConfig: NextConfig = {
+  output: 'standalone',
   serverExternalPackages: [
     'pino',
     'pino-pretty',
@@ -24,10 +29,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
-      {
-        protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
-      },
+      ...(s3ImagePattern ? [s3ImagePattern] : []),
       {
         protocol: 'https',
         hostname: 'nv.haisankyha.vn',

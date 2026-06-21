@@ -1,6 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { createStoragePlugins } from './lib/storage'
 import { migrations } from './migrations'
 import { vi } from '@payloadcms/translations/languages/vi'
 import path from 'path'
@@ -58,14 +58,18 @@ export default buildConfig({
     if (!process.env.DATABASE_URL && !process.env.POSTGRES_URL) {
       payload.logger.warn('DATABASE_URL/POSTGRES_URL is not set - database connection will fail')
     }
+    const s3Ready = Boolean(
+      process.env.S3_BUCKET &&
+        process.env.S3_ACCESS_KEY_ID &&
+        process.env.S3_SECRET_ACCESS_KEY &&
+        process.env.S3_ENDPOINT,
+    )
+    if (process.env.NODE_ENV === 'production' && !s3Ready) {
+      payload.logger.warn(
+        'S3/MinIO is not configured — uploads will use ephemeral local disk (not suitable for Docker/K8s)',
+      )
+    }
   },
   sharp,
-  plugins: [
-    vercelBlobStorage({
-      collections: {
-        media: true,
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    }),
-  ],
+  plugins: createStoragePlugins(),
 })
