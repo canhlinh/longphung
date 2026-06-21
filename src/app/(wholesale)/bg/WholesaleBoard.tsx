@@ -27,12 +27,12 @@ type WholesaleBoardProps = {
 }
 
 const AI_CHIPS: Array<[string, string]> = [
-  ['🎉 Tiệc cưới', 'đồ hải sản cho tiệc cưới, đám tiệc nhiều mâm'],
-  ['🦞 Nhà hàng hải sản', 'sản phẩm cho nhà hàng hải sản'],
-  ['🍲 Lẩu / Nướng', 'đồ cho nồi lẩu và món nướng hải sản'],
-  ['🍻 Quán nhậu', 'món hải sản nhậu được ưa chuộng'],
-  ['🥢 Quán ăn / bún', 'đồ hải sản cho quán ăn, bún'],
-  ['🛒 Bán lẻ chợ', 'hải sản bán lẻ phổ biến, đắt khách'],
+  ['Tiệc cưới & sự kiện', 'đồ hải sản cho tiệc cưới, đám tiệc nhiều mâm'],
+  ['Nhà hàng hải sản', 'sản phẩm cho nhà hàng hải sản'],
+  ['Lẩu & Nướng', 'đồ cho nồi lẩu và món nướng hải sản'],
+  ['Quán nhậu', 'món hải sản nhậu được ưa chuộng'],
+  ['Quán ăn & bún', 'đồ hải sản cho quán ăn, bún'],
+  ['Bán lẻ', 'hải sản bán lẻ phổ biến'],
 ]
 
 const GREET_QUOTES = [
@@ -234,7 +234,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
       `Xin chào, tôi quan tâm các sản phẩm sau từ ${meta.store_name}:`,
       lines.join('\n'),
       `Tạm tính: ${fmt(total)}`,
-      'Vui lòng báo giá & tư vấn giúp tôi. Cảm ơn!',
+      'Vui lòng báo giá và tư vấn. Cảm ơn!',
     ].join('\n')
   }, [cart, meta.store_name])
 
@@ -242,13 +242,12 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
     const name = meta.customer_name
     if (!name) return null
     const tod = timeOfDayGreeting()
-    const quote = GREET_QUOTES[Math.floor(Date.now() / 86400000) % GREET_QUOTES.length]
     return {
-      crown: '👑 KHÁCH HÀNG THÂN THIẾT',
-      hi: `${tod}, ${name}! 💙`,
+      crown: 'KHÁCH HÀNG THÂN THIẾT',
+      hi: `${tod}, ${name}`,
       msg:
         meta.greeting ||
-        `Cảm ơn anh/chị đã tin tưởng & đồng hành cùng ${meta.store_name}. ${quote}`,
+        `Cảm ơn anh/chị đã tin tưởng & đồng hành cùng ${meta.store_name}.`,
     }
   }, [meta.customer_name, meta.greeting, meta.store_name])
 
@@ -369,7 +368,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
   function askAi(queryText: string) {
     const matched = matchAiQuery(cards, queryText)
     setAiAdvice({
-      advice: `Gợi ý cho "${queryText}" — ${matched.length} món phù hợp:`,
+      advice: `Gợi ý cho "${queryText}" — ${matched.length} sản phẩm phù hợp`,
       names: matched.map((card) => card.name),
     })
     setSheet(null)
@@ -486,7 +485,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
       return (
         <div className="empty">
           {curGroup === 'fav'
-            ? 'Chưa có sản phẩm yêu thích.\nBấm ♡ trên sản phẩm để lưu vào đây nhé!'
+            ? 'Chưa có sản phẩm yêu thích.\nNhấn ♡ để thêm sản phẩm vào danh sách yêu thích.'
             : 'Không tìm thấy sản phẩm phù hợp.'}
         </div>
       )
@@ -497,9 +496,9 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
         <>
           <div className="ai-result">
             <button className="ai-back" onClick={() => setAiAdvice(null)} type="button">
-              ← Bỏ gợi ý, xem tất cả
+              ← Xem tất cả sản phẩm
             </button>
-            <div className="ai-advice">✨ {aiAdvice.advice}</div>
+            <div className="ai-advice">{aiAdvice.advice}</div>
           </div>
           <div className="grid">{filteredCards.map((card) => renderCard(card))}</div>
         </>
@@ -530,20 +529,23 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
       <div className="hdr">
         <div className="hdr-top">
           <span className="hdr-logo">🦐</span>
-          <span className="hdr-store">{meta.store_name}</span>
+          <div style={{ display: 'flex', flex: 1, flexDirection: 'column', minWidth: 0 }}>
+            <span className="hdr-store">{meta.store_name}</span>
+            <span className="hdr-subtitle">BẢNG GIÁ SỈ</span>
+          </div>
           {meta.tier_name ? <span className="tier-badge">{meta.tier_name}</span> : null}
-          <button className="bell-btn" onClick={() => setSheet('guide')} title="Bật thông báo giá" type="button">
+          <button className="bell-btn" onClick={() => setSheet('guide')} title="Hướng dẫn lưu bảng giá" type="button">
             🔔
           </button>
         </div>
         <div className="hdr-sub">
           {meta.sale_name ? (
             <span className="cc-line">
-              <b>🧑‍💼 Sales phụ trách:</b> {meta.sale_name}
+              <b>Sales:</b> {meta.sale_name}
               {meta.sale_phone ? (
                 <>
                   <a className="cc-chip cc-call" href={`tel:${contactPhone}`}>
-                    📞 {meta.sale_phone}
+                    {meta.sale_phone}
                   </a>
                   <a
                     className="cc-chip cc-zalo"
@@ -551,7 +553,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    💬 Zalo
+                    Zalo
                   </a>
                 </>
               ) : null}
@@ -559,12 +561,12 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
           ) : null}
           {meta.customer_name ? (
             <span className="cc-line">
-              <b>🛍️ K/H:</b> {meta.customer_name}
+              <b>Khách hàng:</b> {meta.customer_name}
             </span>
           ) : null}
           {meta.boss_name && meta.boss_phone ? (
             <span className="cc-line">
-              <b>☎ Số Dự Phòng/Phản ánh:</b>{' '}
+              <b>Hỗ trợ:</b>{' '}
               <a className="cc-chip cc-boss" href={`tel:${meta.boss_phone.replace(/\s/g, '')}`}>
                 {meta.boss_phone}
               </a>
@@ -582,24 +584,24 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
       ) : null}
 
       <div className={`home-banner${showHomeBanner ? ' on' : ''}`}>
-        <div style={{ fontSize: 24, flex: '0 0 auto' }}>📲</div>
-        <div style={{ flex: 1, fontSize: '12.5px', color: '#1d4e89', lineHeight: 1.4 }}>
+        <div style={{ fontSize: 18, flex: '0 0 auto' }}>📲</div>
+        <div style={{ flex: 1, fontSize: '13px', lineHeight: 1.4 }}>
           <b>Lưu bảng giá về màn hình chính</b>
           <br />
-          Xem giá mỗi ngày & nhận báo giá mới đầu tiên.
+          Nhận cập nhật giá sớm mỗi ngày.
         </div>
         <button
           onClick={() => setSheet('guide')}
           style={{
-            background: '#1565c0',
+            background: 'var(--brand)',
             border: 'none',
-            borderRadius: 10,
+            borderRadius: 8,
             color: '#fff',
             cursor: 'pointer',
             flex: '0 0 auto',
             fontSize: 13,
-            fontWeight: 700,
-            padding: '8px 12px',
+            fontWeight: 600,
+            padding: '7px 13px',
           }}
           type="button"
         >
@@ -617,12 +619,12 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#5b7da5',
+            color: 'var(--muted)',
             cursor: 'pointer',
             flex: '0 0 auto',
-            fontSize: 20,
+            fontSize: 18,
             lineHeight: 1,
-            padding: '0 2px',
+            padding: '0 4px',
           }}
           type="button"
         >
@@ -634,7 +636,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
 
       <div className="ai-btn-wrap">
         <button className="ai-btn" onClick={() => setSheet('ai')} type="button">
-          ✨ Trợ lý chọn hàng theo nhu cầu
+          Gợi ý nhanh theo nhu cầu kinh doanh
         </button>
       </div>
 
@@ -646,7 +648,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
               setAiAdvice(null)
               setQuery(event.target.value)
             }}
-            placeholder="Tìm sản phẩm (gõ không dấu cũng được)…"
+            placeholder="Tìm sản phẩm…"
             type="search"
             value={query}
           />
@@ -678,7 +680,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
               onClick={() => setCurGroup('hot')}
               type="button"
             >
-              <span className="ic">💲</span>Vừa đổi giá <span className="ct">{hotCount}</span>
+              <span className="ic">↕</span>Giá thay đổi <span className="ct">{hotCount}</span>
             </button>
           ) : null}
           {newCount ? (
@@ -708,21 +710,21 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
 
       <div className={`botbar${Object.keys(cart).length ? ' on' : ''}`}>
         <div className="bb-info">
-          <div className="t1">{cartStats.count} sản phẩm quan tâm</div>
+          <div className="t1">{cartStats.count} sản phẩm</div>
           <div className="t2">{fmt(cartStats.total)}</div>
         </div>
         <button className="btn btn-call" onClick={doCall} type="button">
-          📞 Gọi
+          Gọi điện
         </button>
         <button className="btn btn-zalo" onClick={() => setSheet('cart')} type="button">
-          🛒 Danh sách
+          Danh sách
         </button>
       </div>
 
       <div className={`ov${sheet ? ' on' : ''}`} onClick={() => setSheet(null)} role="presentation" />
       <div className={`sheet${sheet === 'cart' ? ' on' : ''}`} onClick={(event) => event.stopPropagation()}>
         <div className="sheet-h">
-          <b>Danh sách quan tâm</b>
+          <b>Sản phẩm quan tâm</b>
           <button className="x" onClick={() => setSheet(null)} type="button">
             ×
           </button>
@@ -750,17 +752,17 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
           ))}
         </div>
         <div className="note-card">
-          💡 Gửi danh sách này cho nhân viên để được báo giá & chốt đơn nhanh nhất.
+          Gửi danh sách này cho nhân viên để nhận báo giá và chốt đơn nhanh nhất.
         </div>
         <div className="sheet-f">
           <button className="btn btn-call" onClick={doCall} type="button">
-            📞 Gọi
+            Gọi điện
           </button>
-          <button className="btn btn-zalo" onClick={doZaloChat} style={{ background: '#e8f1ff', color: '#1565c0' }} type="button">
-            💬 Zalo
+          <button className="btn btn-zalo" onClick={doZaloChat} style={{ background: '#f1f5f9', color: 'var(--brand)' }} type="button">
+            Zalo
           </button>
           <button className="btn btn-zalo" onClick={doZaloShare} type="button">
-            📤 Gửi DS
+            Gửi danh sách
           </button>
         </div>
       </div>
@@ -774,7 +776,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
         </div>
         <div className="sheet-b">
           <div style={{ color: 'var(--muted)', fontSize: '12.5px', marginBottom: 6 }}>
-            Đã sao chép sẵn nội dung. Bấm <b>&quot;Mở Zalo&quot;</b> → DÁN (Paste) vào khung chat gửi nhân viên nhé.
+            Nội dung đã được sao chép. Mở Zalo và dán vào khung chat để gửi cho nhân viên.
           </div>
           <textarea className="z-txt" readOnly value={zaloText} />
         </div>
@@ -789,14 +791,14 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
             style={{ flex: 1, textAlign: 'center', textDecoration: 'none' }}
             target="_blank"
           >
-            💬 Mở Zalo
+            Mở Zalo
           </a>
         </div>
       </div>
 
       <div className={`sheet${sheet === 'guide' ? ' on' : ''}`} onClick={(event) => event.stopPropagation()}>
         <div className="sheet-h">
-          <b>🔔 Nhận thông báo khi giá Yêu thích đổi</b>
+          <b>Nhận thông báo khi giá thay đổi</b>
           <button className="x" onClick={() => setSheet(null)} type="button">
             ×
           </button>
@@ -851,21 +853,21 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
         </div>
         <div className="sheet-f">
           <button className="btn btn-zalo" onClick={() => setSheet(null)} style={{ flex: 1 }} type="button">
-            Đã hiểu 👍
+            Đã hiểu
           </button>
         </div>
       </div>
 
       <div className={`sheet${sheet === 'ai' ? ' on' : ''}`} onClick={(event) => event.stopPropagation()}>
         <div className="sheet-h">
-          <b>✨ Trợ lý chọn hàng</b>
+          <b>Gợi ý sản phẩm</b>
           <button className="x" onClick={() => setSheet(null)} type="button">
             ×
           </button>
         </div>
         <div className="sheet-b">
           <div style={{ color: 'var(--muted)', fontSize: 13, marginBottom: 10 }}>
-            Bạn kinh doanh gì / cần mua gì? Chọn nhóm ngành gợi ý hoặc gõ câu hỏi:
+            Chọn loại hình kinh doanh hoặc nhập yêu cầu để nhận gợi ý phù hợp:
           </div>
           <div className="ai-combos">
             {AI_CHIPS.map(([label, queryText]) => {
@@ -898,7 +900,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
         </div>
         <div className="sheet-f">
           <button className="btn btn-zalo" onClick={() => askAi(aiQuery)} style={{ flex: 1 }} type="button">
-            ✨ Hỏi trợ lý
+            Xem gợi ý
           </button>
         </div>
       </div>
@@ -917,7 +919,7 @@ export function WholesaleBoard({ data, siteHost, zaloUrl }: WholesaleBoardProps)
             </div>
           )}
           <div className="sp-t">
-            🛒 Khách <b style={{ color: 'var(--accent)' }}>{socialPop.masked}</b> {socialPop.action}:<br />
+            Khách <b style={{ color: 'var(--brand)' }}>{socialPop.masked}</b> {socialPop.action}<br />
             <b style={{ color: 'var(--ink)' }}>{socialPop.name}</b>
           </div>
         </div>

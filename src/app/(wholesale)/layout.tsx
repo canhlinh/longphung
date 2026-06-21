@@ -3,8 +3,8 @@ import React from 'react'
 import './bg/wholesale-board.css'
 
 export const metadata = {
-  title: 'Bảng Giá Hải Sản',
-  description: 'Bảng giá hải sản cập nhật mỗi ngày.',
+  title: 'Bảng Giá Sỉ',
+  description: 'Bảng giá sỉ hải sản cập nhật mỗi ngày. Xem giá, chọn sản phẩm và liên hệ đặt hàng.',
 }
 
 export const viewport = {
