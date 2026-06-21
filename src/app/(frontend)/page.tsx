@@ -4,12 +4,12 @@ import {
   CategoryGrid,
   Commitments,
   ContactBand,
-  Hero,
   PostGrid,
   PriceTable,
   ProductGrid,
   SectionHeader,
 } from './components'
+import { HeroSlider as Hero } from './HeroSlider'
 import {
   fallbackCategories,
   fallbackPosts,
@@ -79,7 +79,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero banner={banners[0]} settings={settings} />
+      <Hero banners={banners} settings={settings} />
       <Commitments />
       <section className="page-section">
         <SectionHeader

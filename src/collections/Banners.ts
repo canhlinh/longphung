@@ -10,7 +10,7 @@ export const Banners: CollectionConfig = {
     plural: 'Banner',
   },
   admin: {
-    defaultColumns: ['title', 'placement', 'isActive', 'sortOrder', '_status'],
+    defaultColumns: ['title', 'image', 'placement', 'isActive', 'sortOrder', '_status'],
     useAsTitle: 'title',
   },
   access: {
@@ -39,6 +39,11 @@ export const Banners: CollectionConfig = {
       type: 'upload',
       label: 'Hình ảnh',
       relationTo: 'media',
+      admin: {
+        components: {
+          Cell: '@/collections/ThumbnailCell',
+        },
+      },
     },
     {
       name: 'linkLabel',

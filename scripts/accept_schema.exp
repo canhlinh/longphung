@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+set timeout 120
+spawn npm run dev
+expect {
+    "Is sizes_" {
+        send "\r"
+        exp_continue
+    }
+    "Accept warnings and push schema" {
+        send "y\r"
+        exp_continue
+    }
+}
+interact

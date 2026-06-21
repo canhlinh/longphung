@@ -12,7 +12,7 @@ export const Products: CollectionConfig = {
   },
   admin: {
     group: 'Cửa hàng',
-    defaultColumns: ['name', 'category', 'retailPrice', 'stockStatus', '_status'],
+    defaultColumns: ['name', 'featuredImage', 'category', 'retailPrice', 'stockStatus', '_status'],
     useAsTitle: 'name',
   },
   access: {
@@ -25,6 +25,17 @@ export const Products: CollectionConfig = {
     drafts: true,
   },
   hooks: {
+    beforeChange: [
+      ({ data }) => {
+        if (data.images && data.images.length > 0) {
+          const firstImage = data.images[0].image
+          data.featuredImage = typeof firstImage === 'object' && firstImage !== null ? firstImage.id : firstImage
+        } else {
+          data.featuredImage = null
+        }
+        return data
+      },
+    ],
     beforeValidate: [
       ({ data, operation: _operation }) => {
         if (data?.name && !data.slug) {
@@ -35,6 +46,18 @@ export const Products: CollectionConfig = {
     ],
   },
   fields: [
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Ảnh đại diện',
+      admin: {
+        hidden: true,
+        components: {
+          Cell: '@/collections/ThumbnailCell',
+        },
+      },
+    },
     {
       name: 'name',
       type: 'text',

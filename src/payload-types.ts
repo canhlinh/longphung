@@ -179,7 +179,7 @@ export interface Media {
   focalX?: number | null;
   focalY?: number | null;
   sizes?: {
-    card?: {
+    thumbnail?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -187,7 +187,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    hero?: {
+    preview?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -230,6 +230,7 @@ export interface Category {
  */
 export interface Product {
   id: number;
+  featuredImage?: (number | null) | Media;
   name: string;
   slug: string;
   category: number | Category;
@@ -550,7 +551,7 @@ export interface MediaSelect<T extends boolean = true> {
   sizes?:
     | T
     | {
-        card?:
+        thumbnail?:
           | T
           | {
               url?: T;
@@ -560,7 +561,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        hero?:
+        preview?:
           | T
           | {
               url?: T;
@@ -594,6 +595,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  featuredImage?: T;
   name?: T;
   slug?: T;
   category?: T;

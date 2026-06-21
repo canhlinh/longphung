@@ -24,14 +24,12 @@ export const Media: CollectionConfig = {
     focalPoint: true,
     imageSizes: [
       {
-        name: 'card',
-        width: 640,
-        height: 480,
+        name: 'thumbnail',
+        height: 300,
         position: 'centre',
       },
       {
-        name: 'hero',
-        width: 1600,
+        name: 'preview',
         height: 900,
         position: 'centre',
       },
