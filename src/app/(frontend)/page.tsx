@@ -1,0 +1,122 @@
+import React from 'react'
+
+import {
+  CategoryGrid,
+  Commitments,
+  ContactBand,
+  Hero,
+  PostGrid,
+  PriceTable,
+  ProductGrid,
+  SectionHeader,
+} from './components'
+import {
+  fallbackCategories,
+  fallbackPosts,
+  fallbackPrices,
+  fallbackProducts,
+  findDocs,
+  getSettings,
+} from '@/lib/storefront'
+
+export default async function HomePage() {
+  const [settings, banners, categories, products, prices, posts] = await Promise.all([
+    getSettings(),
+    findDocs(
+      'banners',
+      {
+        sort: 'sortOrder',
+        where: {
+          isActive: {
+            equals: true,
+          },
+          placement: {
+            equals: 'home',
+          },
+        },
+      },
+      [],
+    ),
+    findDocs(
+      'categories',
+      {
+        sort: 'sortOrder',
+        where: {
+          featured: {
+            equals: true,
+          },
+        },
+      },
+      fallbackCategories,
+    ),
+    findDocs(
+      'products',
+      {
+        sort: '-updatedAt',
+        where: {
+          featured: {
+            equals: true,
+          },
+        },
+      },
+      fallbackProducts,
+    ),
+    findDocs('daily-prices', { sort: 'sortOrder' }, fallbackPrices),
+    findDocs(
+      'posts',
+      {
+        sort: '-updatedAt',
+        where: {
+          featured: {
+            equals: true,
+          },
+        },
+      },
+      fallbackPosts,
+    ),
+  ])
+
+  return (
+    <>
+      <Hero banner={banners[0]} settings={settings} />
+      <Commitments />
+      <section className="page-section">
+        <SectionHeader
+          actionHref="/bang-gia"
+          actionLabel="Xem bang gia"
+          eyebrow="Danh muc"
+          title="Chon nhanh theo nhu cau"
+        />
+        <CategoryGrid categories={categories} />
+      </section>
+      <section className="page-section">
+        <SectionHeader
+          actionHref="/bang-gia"
+          actionLabel="Cap nhat hom nay"
+          eyebrow="Bang gia"
+          title="Gia tot dang co"
+        />
+        <PriceTable prices={prices.slice(0, 6)} settings={settings} />
+      </section>
+      <section className="page-section">
+        <SectionHeader
+          actionHref="/danh-muc/hai-san-tuoi"
+          actionLabel="Xem them"
+          eyebrow="San pham"
+          title="San pham noi bat"
+        />
+        <ProductGrid products={products} settings={settings} />
+      </section>
+      <section className="page-section">
+        <SectionHeader
+          actionHref="/bai-viet"
+          actionLabel="Tat ca bai viet"
+          eyebrow="Cung vao bep"
+          title="Meo chon va che bien hai san"
+        />
+        <PostGrid posts={posts} />
+      </section>
+      <ContactBand settings={settings} />
+    </>
+  )
+}
