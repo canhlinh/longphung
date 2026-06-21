@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -33,7 +34,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || '',
     },
   }),
   // Basic startup validation to catch missing required envs early (Issue 21)
@@ -41,10 +42,17 @@ export default buildConfig({
     if (!process.env.PAYLOAD_SECRET) {
       payload.logger.warn('PAYLOAD_SECRET is not set - using empty secret (insecure for production)')
     }
-    if (!process.env.DATABASE_URL) {
-      payload.logger.warn('DATABASE_URL is not set - falling back may cause connection failures')
+    if (!process.env.DATABASE_URL && !process.env.POSTGRES_URL) {
+      payload.logger.warn('DATABASE_URL/POSTGRES_URL is not set - database connection will fail')
     }
   },
   sharp,
-  plugins: [],
+  plugins: [
+    vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
 })
