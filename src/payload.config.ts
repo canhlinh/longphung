@@ -21,7 +21,9 @@ import { SiteSettings } from './globals/SiteSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-if (process.env.NODE_ENV === 'production') {
+const isNextProductionBuild = process.env.NEXT_PHASE === 'phase-production-build'
+
+if (process.env.NODE_ENV === 'production' && !isNextProductionBuild) {
   if (!process.env.PAYLOAD_SECRET) {
     throw new Error('PAYLOAD_SECRET is required in production')
   }

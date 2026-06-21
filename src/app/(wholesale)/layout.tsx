@@ -2,6 +2,9 @@ import React from 'react'
 
 import './bg/wholesale-board.css'
 
+// Render at request time so Docker/CI builds do not need customer or pricing data.
+export const dynamic = 'force-dynamic'
+
 export const metadata = {
   title: 'Bảng Giá Sỉ',
   description: 'Bảng giá sỉ hải sản cập nhật mỗi ngày. Xem giá, chọn sản phẩm và liên hệ đặt hàng.',
