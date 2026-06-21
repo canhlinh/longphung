@@ -11,29 +11,28 @@ function isS3Configured(): boolean {
 }
 
 export function createStoragePlugins(): Plugin[] {
-  if (!isS3Configured()) {
-    return []
-  }
-
-  const sdkEndpoint = process.env.S3_ENDPOINT!
+  const configured = isS3Configured()
+  const sdkEndpoint = process.env.S3_ENDPOINT || 'http://127.0.0.1:9000'
   const publicUrl = process.env.S3_PUBLIC_URL
-  const useDirectUrls = Boolean(publicUrl)
+  const useDirectUrls = configured && Boolean(publicUrl)
 
+  // Always register the plugin so admin importMap stays consistent between
+  // CI/Docker build (no S3 env) and production runtime (S3 configured).
   return [
     s3Storage({
+      enabled: configured,
+      alwaysInsertFields: true,
       acl: 'public-read',
-      bucket: process.env.S3_BUCKET!,
+      bucket: process.env.S3_BUCKET || 'placeholder',
       collections: {
-        media: useDirectUrls
-          ? { disablePayloadAccessControl: true }
-          : true,
+        media: useDirectUrls ? { disablePayloadAccessControl: true } : true,
       },
       config: {
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || 'placeholder',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || 'placeholder',
         },
-        endpoint: useDirectUrls ? publicUrl! : sdkEndpoint,
+        endpoint: useDirectUrls && publicUrl ? publicUrl : sdkEndpoint,
         forcePathStyle: true,
         region: process.env.S3_REGION || 'us-east-1',
       },

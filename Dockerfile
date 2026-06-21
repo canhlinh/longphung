@@ -33,6 +33,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN mkdir -p public
 
+# Keep admin importMap aligned with storage plugins (S3 may be enabled only at runtime).
+RUN npm run generate:importmap
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
@@ -43,6 +46,8 @@ RUN \
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
+
+RUN apk add --no-cache libc6-compat vips
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
