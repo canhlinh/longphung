@@ -10,7 +10,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* .npmrc* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -25,10 +25,15 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+ARG PAYLOAD_SECRET=build-time-placeholder
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_SITE_URL=http://localhost:3000
+ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
+ENV DATABASE_URL=$DATABASE_URL
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN mkdir -p public
 
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \

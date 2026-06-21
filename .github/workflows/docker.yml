@@ -1,0 +1,100 @@
+name: Docker
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: long_phung
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Prepare database schema
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/long_phung
+          PAYLOAD_SECRET: ci-build-secret
+        run: |
+          npm ci
+          npx cross-env NODE_OPTIONS=--no-deprecation payload migrate
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve build-time site URL
+        id: site
+        run: |
+          if [ -n "${{ vars.NEXT_PUBLIC_SITE_URL }}" ]; then
+            echo "url=${{ vars.NEXT_PUBLIC_SITE_URL }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=http://localhost:3000" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix=
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          network: host
+          build-args: |
+            DATABASE_URL=postgres://postgres:postgres@localhost:5432/long_phung
+            PAYLOAD_SECRET=ci-build-secret
+            NEXT_PUBLIC_SITE_URL=${{ steps.site.outputs.url }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
