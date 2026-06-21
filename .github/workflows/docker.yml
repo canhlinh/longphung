@@ -52,7 +52,16 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
 
-      - name: Build and push
+      - name: Docker tooling metadata
+        id: meta_tooling
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch,suffix=-build
+            type=ref,event=tag,suffix=-build
+
+      - name: Build and push runtime image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -60,6 +69,21 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PAYLOAD_SECRET=ci-build-secret
+            NEXT_PUBLIC_SITE_URL=${{ steps.site.outputs.url }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push tooling image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: builder
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta_tooling.outputs.tags }}
+          labels: ${{ steps.meta_tooling.outputs.labels }}
           build-args: |
             PAYLOAD_SECRET=ci-build-secret
             NEXT_PUBLIC_SITE_URL=${{ steps.site.outputs.url }}
