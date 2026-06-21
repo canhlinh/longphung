@@ -13,7 +13,7 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "seed": "node --no-deprecation --import tsx/esm scripts/seed.ts",
+    "seed": "node scripts/run-with-tsx.mjs scripts/seed.ts",
     "import:haisankyha": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/import-haisankyha.ts",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "npm run test:int && npm run test:e2e",
