@@ -7,7 +7,12 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  serverExternalPackages: [
+    'pino',
+    'pino-pretty',
+    'pino-abstract-transport',
+    'thread-stream',
+  ],
   images: {
     localPatterns: [
       {
@@ -25,11 +30,27 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  webpack: (webpackConfig) => {
+  webpack: (webpackConfig, { isServer }) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
+    }
+
+    if (!isServer) {
+      // Vercel forces webpack for Payload; avoid pulling server-only utilities into client bundles.
+      webpackConfig.resolve.alias = {
+        ...webpackConfig.resolve.alias,
+        '@payloadcms/plugin-cloud-storage/utilities$': path.resolve(
+          dirname,
+          'node_modules/@payloadcms/plugin-cloud-storage/dist/utilities/getFileKey.js',
+        ),
+      }
+
+      webpackConfig.resolve.fallback = {
+        ...webpackConfig.resolve.fallback,
+        worker_threads: false,
+      }
     }
 
     return webpackConfig
