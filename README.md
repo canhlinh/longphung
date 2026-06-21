@@ -89,9 +89,12 @@ Products, banners, and posts support draft/publish. Public pages only read publi
 ```bash
 npm run verify:deploy
 npm run migrate
+npm run migrate:run
 ```
 
-If Payload prints a warning like "you've run Payload in dev mode" and asks whether to proceed, stop the Vercel build. That prompt must be handled in a controlled maintenance window after a database backup, not by Vercel.
+`npm run migrate` only checks migration status. `npm run migrate:run` applies migrations and must be run only in a controlled maintenance window after a database backup.
+
+If Payload prints a warning like "you've run Payload in dev mode" and asks whether to proceed, stop the Vercel build. That prompt must be handled manually against the target database, not by Vercel.
 
 Set these environment variables in Vercel for Production and Preview environments that need to boot the app:
 
@@ -126,6 +129,7 @@ npm run dev
 npm run build
 npm run lint
 npm run migrate
+npm run migrate:run
 npm run verify:deploy
 npm run generate:types
 npm run seed
