@@ -19,15 +19,32 @@ RUN \
   fi
 
 
+# Tooling image for one-off Kubernetes jobs (migrate, seed, imports).
+# This intentionally keeps the full dependency tree so TS scripts can import
+# Payload config and project aliases without dependency whack-a-mole.
+FROM base AS tooling
+WORKDIR /app
+
+RUN apk add --no-cache libc6-compat vips
+
+ENV NODE_ENV=production
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json package-lock.json* tsconfig.json ./
+COPY src ./src
+COPY scripts ./scripts
+RUN mkdir -p data/imports
+
+CMD ["npm", "run", "seed"]
+
+
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG PAYLOAD_SECRET=build-time-placeholder
 ARG NEXT_PUBLIC_SITE_URL=http://localhost:3000
-ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -49,7 +66,7 @@ WORKDIR /app
 
 RUN apk add --no-cache libc6-compat vips
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
@@ -68,24 +85,13 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# One-off maintenance commands (seed, import) inside the production container.
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/scripts ./scripts
-COPY --from=builder /app/src ./src
-COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/node_modules/tsx ./node_modules/tsx
-COPY --from=builder /app/node_modules/esbuild ./node_modules/esbuild
-COPY --from=builder /app/node_modules/@esbuild ./node_modules/@esbuild
-COPY --from=builder /app/node_modules/get-tsconfig ./node_modules/get-tsconfig
-COPY --from=builder /app/node_modules/resolve-pkg-maps ./node_modules/resolve-pkg-maps
-RUN chown -R nextjs:nodejs /app/node_modules /app/scripts /app/src
-
 USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+CMD ["node", "server.js"]

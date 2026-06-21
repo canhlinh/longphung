@@ -48,10 +48,7 @@ services:
     profiles: [seed]
     build:
       context: .
-      target: builder
-      args:
-        PAYLOAD_SECRET: ${PAYLOAD_SECRET:-build-placeholder}
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      target: tooling
     command: npm run seed
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/long_phung

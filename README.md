@@ -44,14 +44,18 @@ http://localhost:3000/admin
 npm run seed
 ```
 
-In Docker/Kubernetes, use the compose seed profile or run the seed script in the runtime image built from the current Dockerfile:
+In Docker/Kubernetes, run maintenance scripts from the Docker `tooling` target, not the slim app runtime image. The tooling target keeps the full dependency tree needed by Payload TS scripts.
 
 ```bash
-# Local compose (builder stage, full dev deps)
+# Local compose (tooling stage, full deps)
 docker compose --profile seed run --rm seed
 
-# Production registry (one-off job / kubectl run)
-docker run --rm -e DATABASE_URL=... -e PAYLOAD_SECRET=... ghcr.io/canhlinh/longphung:main npm run seed
+# Build/publish separate images in CI
+docker build --target runner -t ghcr.io/canhlinh/longphung:main .
+docker build --target tooling -t ghcr.io/canhlinh/longphung:main-tooling .
+
+# One-off production job
+docker run --rm -e DATABASE_URL=... -e PAYLOAD_SECRET=... ghcr.io/canhlinh/longphung:main-tooling npm run seed
 ```
 
 Default seed admin:
@@ -80,12 +84,14 @@ Products, banners, and posts support draft/publish. Public pages only read publi
 
 ## Vercel Staging Deployment
 
-`vercel.json` runs `npm run build` only. Do not run Payload migrations inside the Vercel build step; run them deliberately before promoting a deployment or from a trusted CI/job that can reach the production database:
+`vercel.json` runs `npm run build` only. `npm run ci` is also build-only so Vercel cannot accidentally trigger interactive or destructive database prompts. Do not run Payload migrations inside the Vercel build step; run them deliberately before promoting a deployment or from a trusted CI/job that can reach the target database:
 
 ```bash
 npm run verify:deploy
 npm run migrate
 ```
+
+If Payload prints a warning like "you've run Payload in dev mode" and asks whether to proceed, stop the Vercel build. That prompt must be handled in a controlled maintenance window after a database backup, not by Vercel.
 
 Set these environment variables in Vercel for Production and Preview environments that need to boot the app:
 
