@@ -6,8 +6,8 @@ import { getPayload } from 'payload'
 import { slugify } from '@/lib/slugify'
 import { PLACEMENTS } from '@/lib/constants'
 
-const adminEmail = process.env.ADMIN_EMAIL || 'admin@longphung.local'
-const adminPassword = process.env.ADMIN_PASSWORD || 'LongPhung123!'
+const adminEmail = process.env.ADMIN_EMAIL || 'admin@minhkien.local'
+const adminPassword = process.env.ADMIN_PASSWORD || 'MinhKien123!'
 
 async function upsertBySlug(payload: any, collection: string, slug: string, data: Record<string, any>) {
   const existing = await payload.find({
@@ -52,7 +52,7 @@ async function seed() {
       collection: 'users',
       data: {
         email: adminEmail,
-        name: 'Long Phụng Admin',
+        name: 'Minh Kiên Admin',
         password: adminPassword,
         role: 'admin',
       },
@@ -62,14 +62,14 @@ async function seed() {
   await payload.updateGlobal({
     slug: 'site-settings',
     data: {
-      brandName: 'Hải Sản Long Phụng',
+      brandName: 'Hải Sản Minh Kiên',
       tagline: 'Hải sản tươi mỗi ngày cho gia đình và nhà hàng',
       hotline: '0900 000 000',
       zaloUrl: 'https://zalo.me/0900000000',
-      address: 'Cập nhật địa chỉ của Long Phụng',
+      address: 'Cập nhật địa chỉ của Minh Kiên',
       businessHours: '06:00 - 20:00 hằng ngày',
       seo: {
-        title: 'Long Phụng Seafood',
+        title: 'Minh Kiên Seafood',
         description: 'Hải sản tươi sống, sashimi, combo gia đình và bảng giá mỗi ngày.',
       },
     },
@@ -223,7 +223,7 @@ async function seed() {
       retailPrice: 499000,
       wholesalePrice: 455000,
       stockStatus: 'in_stock',
-      origin: 'Long Phụng',
+      origin: 'Minh Kiên',
       size: '3-4 người',
       featured: true,
       bestSeller: true,
@@ -407,7 +407,7 @@ async function seed() {
     placement: PLACEMENTS.HOME,
     sortOrder: 10,
     subtitle:
-      'Long Phụng cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.',
+      'Minh Kiên cập nhật sản phẩm và bảng giá mỗi ngày, ưu tiên đặt nhanh qua Zalo hoặc hotline.',
     title: 'Hải sản tươi cho bữa ăn gia đình và bếp nhà hàng',
   }
   if (bannerExisting.docs[0]) {
@@ -464,7 +464,7 @@ async function seed() {
     slug: 'quanan-hai-san-vip',
     contactPerson: 'Anh Minh',
     phone: '0933 222 111',
-    greeting: 'Cảm ơn anh Minh đã tin tưởng Long Phụng.',
+    greeting: 'Cảm ơn anh Minh đã tin tưởng Minh Kiên.',
     tierName: 'VIP Quán ăn',
     saleName: 'Anh Khoa',
     salePhone: '0908 555 666',

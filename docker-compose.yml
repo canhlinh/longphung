@@ -57,8 +57,8 @@ services:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/long_phung
       PAYLOAD_SECRET: ${PAYLOAD_SECRET}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
-      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@longphung.local}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-LongPhung123!}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@minhkien.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-MinhKien123!}
       S3_ENDPOINT: http://minio:9000
       S3_PUBLIC_URL: ${S3_PUBLIC_URL:-http://127.0.0.1:9000}
       S3_BUCKET: ${S3_BUCKET:-longphung-media}

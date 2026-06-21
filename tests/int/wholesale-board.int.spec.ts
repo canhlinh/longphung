@@ -10,7 +10,7 @@ describe('buildWholesaleBoardData', () => {
         { id: '2', name: 'Sashimi', slug: 'sashimi' },
       ],
       customer: { name: 'Trần Long', contactPerson: 'Anh Long' },
-      settings: { brandName: 'Long Phụng Seafood', hotline: '0900 000 000' },
+      settings: { brandName: 'Minh Kiên Seafood', hotline: '0900 000 000' },
       prices: [
         {
           id: 'price-1',

@@ -1,4 +1,4 @@
-# Long Phung Seafood
+# Minh Kien Seafood
 
 Next.js + Payload CMS catalog website for a seafood retail/wholesale business. V1 is intentionally focused on catalog browsing, daily prices, SEO content, and Zalo/hotline ordering instead of full checkout.
 
@@ -38,7 +38,7 @@ http://localhost:3000
 http://localhost:3000/admin
 ```
 
-5. Seed sample Long Phung data:
+5. Seed sample Minh Kien data:
 
 ```bash
 npm run seed
@@ -47,8 +47,8 @@ npm run seed
 Default seed admin:
 
 ```text
-admin@longphung.local
-LongPhung123!
+admin@minhkien.local
+MinhKien123!
 ```
 
 Change `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env` before seeding if desired.

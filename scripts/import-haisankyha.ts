@@ -255,7 +255,7 @@ async function importData() {
     importedPrices += 1
   }
 
-  console.log('Import complete (categories + products only, Long Phụng branding unchanged)')
+  console.log('Import complete (categories + products only, Minh Kiên branding unchanged)')
   console.log(`Snapshot: ${snapshotPath}`)
   console.log(`Categories: ${categoryBySourceId.size}`)
   console.log(`Products: ${importedProducts}`)
